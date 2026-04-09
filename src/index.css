@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #2BB1D6;
+  --color-primary-dark: #1E94B3;
+  --color-accent: #F25430;
+  --color-accent-light: #FF7A5C;
+  --color-light: #F5F1E6;
+  --color-dark: #1A2836;
+  --color-dark-light: #243442;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+    background-color: #F5F1E6;
+    color: #1A2836;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    min-height: 100vh;
+    width: 100%;
+  }
+
+  ::selection {
+    background-color: rgba(43, 177, 214, 0.3);
+    color: #1A2836;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-dark {
+    background: rgba(26, 40, 54, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #2BB1D6, #F25430);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .shimmer {
+    background: linear-gradient(
+      110deg,
+      transparent 25%,
+      rgba(255, 255, 255, 0.06) 37%,
+      transparent 50%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .float-slow {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  /* Continuous gradient orb animation - smooth breathing effect */
+  .gradient-orb {
+    background: radial-gradient(circle at 40% 40%, rgba(43,177,214,0.6) 0%, rgba(30,148,179,0.35) 30%, rgba(242,84,48,0.15) 55%, transparent 75%);
+    animation: orb-breathe 5s ease-in-out infinite;
+  }
+
+  @keyframes orb-breathe {
+    0%, 100% {
+      opacity: 0.6;
+      transform: scale(0.95);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.15);
+    }
+  }
+
+  /* Animated gradient border */
+  .gradient-border {
+    position: relative;
+    background: rgba(26, 40, 54, 0.8);
+    border-radius: 1rem;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(90deg, #2BB1D6, #1E94B3, #2BB1D6, #F25430, #2BB1D6);
+    background-size: 300% 100%;
+    animation: gradient-flow 4s linear infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  @keyframes gradient-flow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+}
