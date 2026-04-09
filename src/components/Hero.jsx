@@ -111,7 +111,7 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
-              className="mt-10 flex flex-wrap items-center justify-center gap-8 lg:justify-start"
+              className="mt-12 flex flex-wrap items-center justify-center gap-6 sm:gap-8 lg:justify-start"
             >
               {[
                 { value: '3+', label: 'Vendor Types' },
@@ -121,7 +121,7 @@ export default function Hero() {
                 <div key={label} className="flex items-center gap-8">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-gradient">{value}</div>
-                    <div className="mt-0.5 text-xs text-light/40">{label}</div>
+                    <div className="mt-1 text-xs text-light/40">{label}</div>
                   </div>
                   {i < 2 && <div className="hidden h-8 w-px bg-light/10 sm:block" />}
                 </div>
@@ -148,12 +148,12 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Scroll indicator */}
+        {/* Scroll indicator - hidden on mobile */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-light/30"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 text-light/30"
         >
           <span className="text-[10px] font-medium tracking-[0.2em] uppercase">Scroll</span>
           <div className="h-8 w-px bg-gradient-to-b from-light/30 to-transparent" />

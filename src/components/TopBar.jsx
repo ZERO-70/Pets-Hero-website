@@ -2,7 +2,7 @@ import { MapPin, Phone } from 'lucide-react';
 
 export default function TopBar() {
   return (
-    <div className="bg-dark text-light text-sm py-2 px-4">
+    <div className="hidden sm:block bg-dark text-light text-sm py-2 px-4">
       <div className="mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-1 px-2 sm:px-6 lg:px-8">
         <div className="flex items-center gap-2">
           <MapPin size={14} className="text-accent shrink-0" />
