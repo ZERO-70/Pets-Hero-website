@@ -44,11 +44,11 @@ export default function Navbar({ theme, onToggleTheme }) {
   const isDark = theme === 'dark';
 
   const navShellClass = isDark
-    ? 'bg-gradient-to-r from-[#1A2836]/95 via-[#243442]/95 via-[#F25430]/75 via-[#243442]/95 to-[#1A2836]/95 border-b border-[#F5F1E6]/10'
+    ? 'bg-gradient-to-r from-[#1A2836]/95 via-[#243442]/95 via-[#2BB1D6]/75 via-[#243442]/95 to-[#1A2836]/95 border-b border-[#F5F1E6]/10'
     : 'bg-gradient-to-r from-[#2BB1D6]/90 via-[#1E94B3]/90 via-[#F25430]/80 via-[#1E94B3]/90 to-[#2BB1D6]/90 border-b border-white/10';
 
   const mobileShellClass = isDark
-    ? 'bg-gradient-to-r from-[#1A2836]/97 via-[#243442]/97 via-[#F25430]/80 via-[#243442]/97 to-[#1A2836]/97 border-t border-[#F5F1E6]/20'
+    ? 'bg-gradient-to-r from-[#1A2836]/97 via-[#243442]/97 via-[#2BB1D6]/80 via-[#243442]/97 to-[#1A2836]/97 border-t border-[#F5F1E6]/20'
     : 'bg-gradient-to-r from-[#2BB1D6]/95 via-[#1E94B3]/95 via-[#F25430]/85 via-[#1E94B3]/95 to-[#2BB1D6]/95 border-t border-white/20';
 
   useEffect(() => {
