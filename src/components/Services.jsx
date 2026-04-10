@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Scissors, ShoppingBag, Stethoscope, Heart } from 'lucide-react';
 import PawPrints from './PawPrints';
+import SectionDivider from './SectionDivider';
 
 const services = [
   {
@@ -59,7 +60,7 @@ export default function Services() {
       {/* Floating paw prints */}
       <PawPrints count={4} />
       
-      <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
+      <div className="relative z-10 mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -67,11 +68,11 @@ export default function Services() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-semibold tracking-wider text-primary uppercase">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-semibold tracking-wider text-[#2BB1D6] uppercase">
             <span>🐾</span> Hero Pets Vendors <span>🐾</span>
           </span>
-          <h2 className="mb-5 text-4xl font-bold text-dark sm:text-5xl">Our Services 🦴</h2>
-          <p className="mx-auto max-w-xl text-lg text-dark/55">
+          <h2 className="theme-text-strong mb-5 text-4xl font-bold sm:text-5xl">Our Services 🦴</h2>
+          <p className="theme-text-muted mx-auto max-w-xl text-lg">
             Connect with the best pet care professionals, products, and doctors — all in one platform.
           </p>
         </motion.div>
@@ -150,6 +151,8 @@ export default function Services() {
           ))}
         </motion.div>
       </div>
+
+      <SectionDivider variant="servicesToMobile" />
     </section>
   );
 }

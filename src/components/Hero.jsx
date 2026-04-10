@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import PawPrints from './PawPrints';
 import AnimatedPawTrail from './AnimatedPawTrail';
+import SectionDivider from './SectionDivider';
 
 const PHRASES = [
   'Simplify Pet care\nAmplify Love ❤️',
@@ -52,7 +53,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen items-center overflow-hidden bg-gradient-to-br from-light via-white to-cream pt-24"
+      className="hero-theme-bg relative flex min-h-screen items-center overflow-hidden pt-24"
     >
       {/* Animated gradient orb - continuous primary color loop */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -77,7 +78,34 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 md:py-16 lg:px-12">
+      {/* Layered wave background */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[44%] overflow-hidden opacity-95">
+        <svg className="hero-wave hero-wave-back" viewBox="0 0 1440 320" preserveAspectRatio="none">
+          <path
+            fill="#2BB1D6"
+            fillOpacity="0.1"
+            d="M0,224L60,208C120,192,240,160,360,154.7C480,149,600,171,720,186.7C840,203,960,213,1080,208C1200,203,1320,181,1380,170.7L1440,160L1440,320L0,320Z"
+          />
+        </svg>
+
+        <svg className="hero-wave hero-wave-mid" viewBox="0 0 1440 320" preserveAspectRatio="none">
+          <path
+            fill="#1E94B3"
+            fillOpacity="0.22"
+            d="M0,256L60,234.7C120,213,240,171,360,149.3C480,128,600,128,720,144C840,160,960,192,1080,197.3C1200,203,1320,181,1380,170.7L1440,160L1440,320L0,320Z"
+          />
+        </svg>
+
+        <svg className="hero-wave hero-wave-front" viewBox="0 0 1440 320" preserveAspectRatio="none">
+          <path
+            fill="#FF6B45"
+            fillOpacity="0.32"
+            d="M0,288L60,272C120,256,240,224,360,208C480,192,600,192,720,202.7C840,213,960,235,1080,234.7C1200,235,1320,213,1380,202.7L1440,192L1440,320L0,320Z"
+          />
+        </svg>
+      </div>
+
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 md:py-16 lg:px-12">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Text column */}
           <motion.div
@@ -117,7 +145,7 @@ export default function Hero() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#F25430] opacity-75" />
                 <span className="relative inline-flex h-full w-full rounded-full bg-[#F25430]" />
               </span>
-              <span className="text-cute-bold relative text-sm tracking-[0.16em] text-[#1A2836] uppercase">
+              <span className="theme-text-strong text-cute-bold relative text-sm tracking-[0.16em] uppercase">
                 Pets Hero
               </span>
             </motion.div>
@@ -131,7 +159,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="mx-auto mb-10 max-w-lg text-base leading-relaxed text-dark/60 sm:text-lg lg:mx-0"
+              className="theme-text-muted mx-auto mb-10 max-w-lg text-base leading-relaxed sm:text-lg lg:mx-0"
             >
               At Pets Hero, we are dedicated to providing exceptional services and products for
               your beloved pets. Our platform brings together three unique vendors — each
@@ -153,7 +181,7 @@ export default function Hero() {
                 <div key={label} className="flex items-center gap-8">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-gradient">{value}</div>
-                    <div className="mt-0.5 text-xs text-dark/40">{label}</div>
+                    <div className="theme-text-subtle mt-0.5 text-xs">{label}</div>
                   </div>
                   {i < 2 && <div className="hidden h-8 w-px bg-light/10 sm:block" />}
                 </div>
@@ -191,6 +219,8 @@ export default function Hero() {
           <div className="h-8 w-px bg-gradient-to-b from-light/30 to-transparent" />
         </motion.div>
       </div>
+
+      <SectionDivider variant="heroToServices" />
     </section>
   );
 }

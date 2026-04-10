@@ -37,7 +37,7 @@ export default function PawPrints({ count = 6 }) {
             ease: 'easeInOut',
           }}
         >
-          <PawIcon className="text-6xl opacity-70" />
+          <PawIcon className="floating-paw text-6xl opacity-70" />
         </motion.div>
       ))}
     </div>

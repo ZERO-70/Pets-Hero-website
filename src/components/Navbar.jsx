@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-scroll';
-import { Menu, X } from 'lucide-react';
+import { Menu, Moon, Sun, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const navLinks = [
@@ -34,13 +34,22 @@ const socialLinks = [
   { href: 'https://www.snapchat.com/@petsherosa', Icon: SnapchatIcon, label: 'Snapchat' },
 ];
 
-export default function Navbar() {
+export default function Navbar({ theme, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
   const lastScrollY = useRef(0);
   const gradientStartTime = useRef(Date.now());
+  const isDark = theme === 'dark';
+
+  const navShellClass = isDark
+    ? 'bg-gradient-to-r from-[#1A2836]/95 via-[#243442]/95 via-[#F25430]/75 via-[#243442]/95 to-[#1A2836]/95 border-b border-[#F5F1E6]/10'
+    : 'bg-gradient-to-r from-[#2BB1D6]/90 via-[#1E94B3]/90 via-[#F25430]/80 via-[#1E94B3]/90 to-[#2BB1D6]/90 border-b border-white/10';
+
+  const mobileShellClass = isDark
+    ? 'bg-gradient-to-r from-[#1A2836]/97 via-[#243442]/97 via-[#F25430]/80 via-[#243442]/97 to-[#1A2836]/97 border-t border-[#F5F1E6]/20'
+    : 'bg-gradient-to-r from-[#2BB1D6]/95 via-[#1E94B3]/95 via-[#F25430]/85 via-[#1E94B3]/95 to-[#2BB1D6]/95 border-t border-white/20';
 
   useEffect(() => {
     let rafId = null;
@@ -112,7 +121,7 @@ export default function Navbar() {
     <nav
       className={`fixed left-0 right-0 z-50 transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${
         visible ? 'translate-y-0' : '-translate-y-full'
-      } bg-gradient-to-r from-[#2BB1D6]/90 via-[#1E94B3]/90 via-[#F25430]/80 via-[#1E94B3]/90 to-[#2BB1D6]/90 backdrop-blur-xl border-b border-white/10 animate-gradient-flow`}
+      } backdrop-blur-xl animate-gradient-flow ${navShellClass}`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-2.5 sm:px-10 lg:px-12 lg:py-3">
         <Link to="hero" smooth duration={500} className="cursor-pointer flex items-center gap-3">
@@ -147,6 +156,16 @@ export default function Navbar() {
         </div>
 
         <div className="hidden md:flex items-center gap-2.5 lg:gap-3">
+          <button
+            type="button"
+            onClick={onToggleTheme}
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20 text-white transition-all duration-200 hover:bg-[#F25430]"
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {isDark ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
+
           {socialLinks.map(({ href, Icon, label }) => (
             <motion.a
               key={label}
@@ -163,13 +182,24 @@ export default function Navbar() {
           ))}
         </div>
 
-        <button
-          className="md:hidden text-white p-1"
-          onClick={() => setMenuOpen((v) => !v)}
-          aria-label="Toggle menu"
-        >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="md:hidden flex items-center gap-2">
+          <button
+            type="button"
+            className="text-white p-1.5 rounded-full bg-white/20 transition-colors hover:bg-[#F25430]"
+            onClick={onToggleTheme}
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {isDark ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+
+          <button
+            className="text-white p-1"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -179,7 +209,7 @@ export default function Navbar() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="md:hidden overflow-hidden bg-gradient-to-r from-[#2BB1D6]/95 via-[#1E94B3]/95 via-[#F25430]/85 via-[#1E94B3]/95 to-[#2BB1D6]/95 backdrop-blur-xl border-t border-white/20 animate-gradient-flow"
+            className={`md:hidden overflow-hidden backdrop-blur-xl animate-gradient-flow ${mobileShellClass}`}
             style={{ animationDelay: `${-((Date.now() - gradientStartTime.current) % 30000)}ms` }}
           >
             <div className="px-4 pb-4 pt-2 flex flex-col gap-3">

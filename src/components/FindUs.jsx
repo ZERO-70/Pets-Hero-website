@@ -1,15 +1,16 @@
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Clock, Heart } from 'lucide-react';
 import PawPrints from './PawPrints';
+import SectionDivider from './SectionDivider';
 
 const contactItems = [
   {
     icon: MapPin,
     title: 'Address',
-    iconBg: 'bg-primary/15',
-    iconColor: 'text-primary',
+    iconBg: 'bg-[#2BB1D6]/15',
+    iconColor: 'text-[#2BB1D6]',
     content: (
-      <p className="text-sm leading-relaxed text-dark/60">
+      <p className="theme-text-muted text-sm leading-relaxed">
         6746 Ahmad Fathi Zaghloul 2599,<br />
         Al Taawun Dist.<br />
         Riyadh, KSA
@@ -33,7 +34,7 @@ const contactItems = [
     iconBg: 'bg-[#2BB1D6]/10',
     iconColor: 'text-[#2BB1D6]',
     content: (
-      <p className="text-sm leading-relaxed text-dark/60">
+      <p className="theme-text-muted text-sm leading-relaxed">
         Sun – Thu: 9:00 AM – 6:00 PM<br />
         Fri – Sat: Closed
       </p>
@@ -43,11 +44,11 @@ const contactItems = [
 
 export default function FindUs() {
   return (
-    <section id="find-us" className="relative bg-[#F5F1E6] py-24">
+    <section id="find-us" className="findus-theme-bg relative py-24">
       {/* Floating paw prints */}
       <PawPrints count={3} />
       
-      <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
+      <div className="relative z-10 mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -58,8 +59,8 @@ export default function FindUs() {
           <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#2BB1D6]/10 px-4 py-1.5 text-sm font-semibold tracking-wider text-[#2BB1D6] uppercase">
             <MapPin size={14} /> Location <span>📍</span>
           </span>
-          <h2 className="mb-5 text-4xl font-bold text-[#1A2836] sm:text-5xl">Find Us 🗺️</h2>
-          <p className="mx-auto max-w-xl text-lg text-[#1A2836]/55">
+          <h2 className="theme-text-strong mb-5 text-4xl font-bold sm:text-5xl">Find Us 🗺️</h2>
+          <p className="theme-text-muted mx-auto max-w-xl text-lg">
             Visit our office or get in touch — we're always here to help with your pet care needs.
           </p>
         </motion.div>
@@ -81,7 +82,7 @@ export default function FindUs() {
                   <Icon size={20} className={iconColor} />
                 </div>
                 <div>
-                  <h4 className="mb-1 font-semibold text-dark">{title}</h4>
+                  <h4 className="theme-text-strong mb-1 font-semibold">{title}</h4>
                   {content}
                 </div>
               </div>
@@ -107,6 +108,8 @@ export default function FindUs() {
           </motion.div>
         </div>
       </div>
+
+      <SectionDivider variant="findUsToFooter" />
     </section>
   );
 }

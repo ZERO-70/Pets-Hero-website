@@ -5,6 +5,7 @@ import {
   Store, Wallet, Heart, Sparkles
 } from 'lucide-react';
 import PawPrints from './PawPrints';
+import SectionDivider from './SectionDivider';
 
 const AndroidIcon = () => (
   <svg viewBox="0 0 576 512" fill="currentColor" className="w-4 h-4">
@@ -95,11 +96,13 @@ export default function MobileApps() {
   const currentTab = tabs.find((t) => t.id === activeTab);
 
   return (
-    <section id="mobile-apps" className="relative py-24 bg-gradient-to-br from-[#2BB1D6]/10 via-[#F5F1E6] to-[#F25430]/5 overflow-hidden">
+    <section id="mobile-apps" className="mobileapps-theme-bg relative overflow-hidden py-24">
       {/* Floating paw prints */}
       <PawPrints count={3} />
+
+      <div className="mobileapps-overlay pointer-events-none absolute inset-0" />
       
-      <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
+      <div className="relative z-10 mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -114,16 +117,16 @@ export default function MobileApps() {
           >
             <Sparkles size={14} /> Download Now <Sparkles size={14} />
           </motion.span>
-          <h2 className="text-4xl sm:text-5xl font-bold text-[#1A2836] mb-5">
+          <h2 className="theme-text-strong mb-5 text-4xl font-bold sm:text-5xl">
             📱 Our Mobile Apps 🐾
           </h2>
-          <p className="text-[#1A2836]/60 text-lg max-w-xl mx-auto">
+          <p className="theme-text-muted mx-auto max-w-xl text-lg">
             Available for both pet owners and vendors — get started in minutes.
           </p>
         </motion.div>
 
-        <div className="flex justify-center mb-10">
-          <div className="inline-flex bg-white/70 rounded-full p-1 gap-1 shadow-sm">
+        <div className="mb-10 flex justify-center">
+          <div className="mobileapps-tab-shell inline-flex rounded-full p-1 gap-1 shadow-sm">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -131,7 +134,7 @@ export default function MobileApps() {
                 className={`relative px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
                   activeTab === tab.id
                     ? 'text-white'
-                    : 'text-[#1A2836]/60 hover:text-[#2BB1D6]'
+                    : 'mobileapps-tab-inactive'
                 }`}
               >
                 {activeTab === tab.id && (
@@ -181,8 +184,8 @@ export default function MobileApps() {
                     <Icon size={20} className="text-[#2BB1D6] group-hover:text-[#F25430] transition-colors duration-300" />
                   </motion.div>
                   <div>
-                    <h4 className="font-semibold text-[#1A2836] mb-1">{title}</h4>
-                    <p className="text-[#1A2836]/60 text-sm leading-relaxed">{desc}</p>
+                    <h4 className="theme-text-strong mb-1 font-semibold">{title}</h4>
+                    <p className="theme-text-muted text-sm leading-relaxed">{desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -201,7 +204,7 @@ export default function MobileApps() {
                     alt={`${currentTab.label} mockup`}
                     className="h-[320px] w-auto object-contain rounded-xl sm:h-[380px]"
                   />
-                  <div className="absolute bottom-3 left-0 right-0 text-center text-sm font-semibold text-[#1A2836]/60">
+                  <div className="theme-text-muted absolute bottom-3 left-0 right-0 text-center text-sm font-semibold">
                     {currentTab.label} 📱
                   </div>
                 </div>
@@ -209,8 +212,8 @@ export default function MobileApps() {
             </motion.div>
 
             <div className="flex flex-col gap-4 items-center lg:items-start">
-              <h3 className="text-2xl font-bold text-[#1A2836]">{currentTab.label}</h3>
-              <p className="text-[#1A2836]/60 text-sm leading-relaxed text-center lg:text-left">
+              <h3 className="theme-text-strong text-2xl font-bold">{currentTab.label}</h3>
+              <p className="theme-text-muted text-center text-sm leading-relaxed lg:text-left">
                 {activeTab === 'customer'
                   ? 'Download the Pets Hero customer app and access everything your pet needs — from shopping to vet consultations.'
                   : 'Join Pets Hero as a vendor, doctor, or service provider and grow your business by connecting with thousands of pet owners.'}
@@ -229,7 +232,7 @@ export default function MobileApps() {
                   Google Play
                 </motion.a>
                 <motion.button 
-                  className="flex items-center gap-2 bg-white hover:bg-[#2BB1D6]/10 text-[#1A2836] font-semibold px-5 py-3 rounded-full border border-[#2BB1D6]/20 text-sm"
+                  className="theme-text-strong flex items-center gap-2 rounded-full border border-[#2BB1D6]/20 bg-white px-5 py-3 text-sm font-semibold hover:bg-[#2BB1D6]/10"
                   whileHover={{ scale: 1.08, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: 'spring', stiffness: 400 }}
@@ -243,7 +246,7 @@ export default function MobileApps() {
                   {['🐕', '🐈', '🐇'].map((emoji, i) => (
                     <motion.div
                       key={i}
-                      className="w-8 h-8 rounded-full bg-[#2BB1D6]/30 border-2 border-white flex items-center justify-center text-sm"
+                      className="mobileapps-pet-chip flex h-8 w-8 items-center justify-center rounded-full border-2 text-sm"
                       animate={{ y: [0, -4, 0] }}
                       transition={{ duration: 1.5, delay: i * 0.2, repeat: Infinity }}
                       whileHover={{ scale: 1.2, rotate: 10 }}
@@ -253,7 +256,7 @@ export default function MobileApps() {
                   ))}
                 </div>
                 <motion.span 
-                  className="text-[#1A2836]/50 text-xs flex items-center gap-1"
+                  className="theme-text-muted flex items-center gap-1 text-xs"
                   animate={{ opacity: [0.5, 1, 0.5] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
@@ -265,6 +268,8 @@ export default function MobileApps() {
           </motion.div>
         </AnimatePresence>
       </div>
+
+      <SectionDivider variant="mobileToCeo" />
     </section>
   );
 }

@@ -36,7 +36,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="relative bg-gradient-to-br from-[#2BB1D6]/10 via-[#F5F1E6] to-[#F25430]/10 pt-14 pb-6">
+    <footer className="footer-theme-bg relative pt-14 pb-6">
       {/* Decorative paw prints at bottom */}
       <div className="absolute bottom-0 left-0 right-0 overflow-hidden pointer-events-none opacity-10">
         <div className="flex justify-center gap-8 pb-4">
@@ -59,14 +59,14 @@ export default function Footer() {
             <Link to="hero" smooth duration={500} className="cursor-pointer inline-block mb-4">
               <img src="/assets/logo.png" alt="Pets Hero" className="h-14 w-auto object-contain" />
             </Link>
-            <p className="text-[#1A2836]/60 text-sm leading-relaxed max-w-xs">
+            <p className="theme-text-muted max-w-xs text-sm leading-relaxed">
               Your partner for complete pet care 🐾 — connecting pet owners with services, products,
               and expert veterinary care in Saudi Arabia.
             </p>
           </div>
 
           <div>
-            <h5 className="font-semibold text-[#1A2836] mb-4 flex items-center gap-2">
+            <h5 className="theme-text-strong mb-4 flex items-center gap-2 font-semibold">
               Quick Links <span>🦴</span>
             </h5>
             <ul className="space-y-2.5">
@@ -77,7 +77,7 @@ export default function Footer() {
                     smooth
                     duration={500}
                     offset={-80}
-                    className="text-[#1A2836]/60 hover:text-[#2BB1D6] transition-colors text-sm cursor-pointer"
+                    className="theme-text-muted hover:text-[#2BB1D6] cursor-pointer text-sm transition-colors"
                   >
                     {label}
                   </Link>
@@ -87,7 +87,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h5 className="font-semibold text-[#1A2836] mb-4 flex items-center gap-2">
+            <h5 className="theme-text-strong mb-4 flex items-center gap-2 font-semibold">
               Connect With Us <span>❤️</span>
             </h5>
             <div className="flex items-center gap-3 mb-6">
@@ -105,7 +105,7 @@ export default function Footer() {
               ))}
             </div>
             <div className="space-y-1">
-              <p className="text-[#1A2836]/60 text-sm">📍 Al Taawun Dist. Riyadh, KSA</p>
+              <p className="theme-text-muted text-sm">📍 Al Taawun Dist. Riyadh, KSA</p>
               <a href="tel:+966539222742" className="text-[#F25430] hover:underline text-sm">
                 📞 +966-53-922-2742
               </a>
@@ -114,7 +114,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-6 text-center">
-          <p className="text-[#1A2836]/40 text-sm flex items-center justify-center gap-2">
+          <p className="theme-text-muted flex items-center justify-center gap-2 text-sm">
             <span>🐾</span> © 2026 Pets Hero. All Rights Reserved. <span>🐾</span>
           </p>
         </div>
