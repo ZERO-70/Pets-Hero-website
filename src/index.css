@@ -214,6 +214,42 @@ html.theme-dark {
   html.theme-dark #ceo .shimmer {
     background: linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, 0.09) 37%, transparent 50%);
   }
+
+  /* Dark mode hover glow effects for cards and buttons */
+  html.theme-dark #services .card-with-ears,
+  html.theme-dark #ceo .rounded-2xl,
+  html.theme-dark #find-us .rounded-2xl,
+  html.theme-dark .polaroid,
+  html.theme-dark .polaroid-app {
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+
+  html.theme-dark #services .card-with-ears:hover,
+  html.theme-dark #ceo .rounded-2xl:hover,
+  html.theme-dark #find-us .rounded-2xl:hover,
+  html.theme-dark .polaroid:hover,
+  html.theme-dark .polaroid-app:hover {
+    box-shadow:
+      0 0 0 1px var(--border-soft),
+      0 0 20px rgba(43, 177, 214, 0.35),
+      0 0 40px rgba(242, 84, 48, 0.15);
+    border-color: rgba(43, 177, 214, 0.5);
+  }
+
+  /* Dark mode button glow effects */
+  html.theme-dark button:hover,
+  html.theme-dark a[href]:hover,
+  html.theme-dark .mobileapps-tab-shell button:hover {
+    box-shadow: 0 0 15px rgba(43, 177, 214, 0.4);
+  }
+
+  /* Dark mode primary CTA button enhanced glow */
+  html.theme-dark button[class*='bg-[#F25430]']:hover,
+  html.theme-dark a[class*='bg-[#F25430]']:hover {
+    box-shadow:
+      0 0 15px rgba(242, 84, 48, 0.5),
+      0 0 30px rgba(242, 84, 48, 0.25);
+  }
 }
 
 @layer utilities {

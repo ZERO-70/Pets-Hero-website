@@ -202,6 +202,22 @@ export default function Navbar({ theme, onToggleTheme }) {
         </div>
       </div>
 
+      {/* Floating animals at navbar bottom */}
+      <div className="absolute -bottom-2 left-0 right-0 overflow-hidden pointer-events-none opacity-15">
+        <div className="flex justify-center gap-8">
+          {['🐾', '🐕', '🐈', '🐇', '🐾'].map((emoji, i) => (
+            <motion.span
+              key={i}
+              className="text-7xl"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 2, delay: i * 0.2, repeat: Infinity }}
+            >
+              {emoji}
+            </motion.span>
+          ))}
+        </div>
+      </div>
+
       <AnimatePresence>
         {menuOpen && (
           <motion.div
