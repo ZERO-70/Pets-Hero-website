@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import CursorGlow from './components/CursorGlow'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -23,12 +23,16 @@ const getInitialTheme = () => {
 
 function App() {
   const [theme, setTheme] = useState(getInitialTheme)
+  const manualToggle = useRef(false)
 
   useEffect(() => {
     const isDark = theme === 'dark'
     document.documentElement.classList.toggle('theme-dark', isDark)
     document.documentElement.style.colorScheme = isDark ? 'dark' : 'light'
-    window.localStorage.setItem(THEME_KEY, theme)
+    // Only save to localStorage if user manually toggled (not auto-sync)
+    if (manualToggle.current) {
+      window.localStorage.setItem(THEME_KEY, theme)
+    }
   }, [theme])
 
   // Auto-sync with system theme changes (only if no manual preference stored)
@@ -39,6 +43,7 @@ function App() {
       const stored = window.localStorage.getItem(THEME_KEY)
       // Only auto-switch if user hasn't manually set a preference
       if (!stored) {
+        manualToggle.current = false
         setTheme(e.matches ? 'dark' : 'light')
       }
     }
@@ -48,6 +53,7 @@ function App() {
   }, [])
 
   const handleToggleTheme = () => {
+    manualToggle.current = true
     setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'))
   }
 
