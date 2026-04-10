@@ -59,11 +59,11 @@ export default function Ceo() {
               <div className="p-6 sm:p-8">
                 {/* Avatar + name */}
                 <div className="mb-6 flex items-center gap-5">
-                  <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-2xl border-2 border-primary/20 shadow-lg sm:h-24 sm:w-24">
+                  <div className="polaroid shrink-0 w-24 sm:w-28">
                     <img
                       src="/assets/ceo-real.jpg"
                       alt="Mr. Yazeed - CEO & Founder"
-                      className="h-full w-full object-cover"
+                      className="aspect-square object-cover"
                     />
                   </div>
                   <div className="min-w-0">
@@ -128,7 +128,23 @@ export default function Ceo() {
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1 }}
                     whileHover={{ scale: 1.1, y: -2 }}
-                    className="inline-flex items-center gap-1 rounded-full border border-[#2BB1D6]/10 bg-[#2BB1D6]/5 px-3.5 py-1.5 text-sm text-[#1A2836]/70 transition-colors duration-200 hover:border-[#2BB1D6]/30 hover:text-[#2BB1D6] cursor-pointer"
+                    animate={name === 'Pets Hero' ? {
+                      rotate: [0, -3, 3, -2, 2, 0],
+                      scale: [1, 1.05, 0.98, 1.02, 1],
+                    } : undefined}
+                    {...(name === 'Pets Hero' ? {
+                      transition: {
+                        duration: 0.6,
+                        repeat: Infinity,
+                        repeatDelay: 1.5,
+                        ease: 'easeInOut',
+                      }
+                    } : {})}
+                    className={`inline-flex items-center gap-1 rounded-full border px-3.5 py-1.5 text-sm cursor-pointer transition-colors duration-200 ${
+                      name === 'Pets Hero'
+                        ? 'border-[#F25430]/30 bg-gradient-to-r from-[#F25430]/20 to-[#FF7A5C]/20 text-[#F25430] font-semibold shadow-sm shadow-[#F25430]/20'
+                        : 'border-[#2BB1D6]/10 bg-[#2BB1D6]/5 text-[#1A2836]/70 hover:border-[#2BB1D6]/30 hover:text-[#2BB1D6]'
+                    }`}
                   >
                     <span>{emoji}</span>
                     {name}

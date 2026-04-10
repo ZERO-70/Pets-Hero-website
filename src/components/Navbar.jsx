@@ -38,75 +38,128 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
   const lastScrollY = useRef(0);
+  const gradientStartTime = useRef(Date.now());
 
   useEffect(() => {
+    let rafId = null;
+    const directionThreshold = 8;
+
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      // Always show at top
-      if (currentScrollY < 50) {
-        setVisible(true);
-        setScrolled(false);
-      } else {
-        setScrolled(true);
-        // Hide when scrolling down, show when scrolling up
-        if (currentScrollY > lastScrollY.current) {
-          setVisible(false); // Scrolling down - hide
+      if (rafId) return;
+
+      rafId = requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        const scrollDelta = currentScrollY - lastScrollY.current;
+
+        // Always show at top
+        if (currentScrollY < 50) {
+          setVisible(true);
+          setScrolled(false);
         } else {
-          setVisible(true); // Scrolling up - show
+          setScrolled(true);
+
+          if (scrollDelta > directionThreshold) {
+            setVisible(false);
+          } else if (scrollDelta < -directionThreshold) {
+            setVisible(true);
+          }
         }
-      }
-      
-      lastScrollY.current = currentScrollY;
+
+        lastScrollY.current = currentScrollY;
+
+        rafId = null;
+      });
     };
-    
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, []);
+
+  // Track active section using Intersection Observer
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-50% 0px -50% 0px',
+      threshold: 0,
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Observe all sections
+    const sections = ['hero', 'mobile-apps', 'services', 'find-us', 'ceo'];
+    sections.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   return (
     <nav
-      className={`fixed left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-        visible ? 'top-0' : '-top-20'
-      } ${
-        scrolled
-          ? 'bg-[#2BB1D6] shadow-lg shadow-[#2BB1D6]/30'
-          : 'bg-gradient-to-r from-[#2BB1D6] to-[#1E94B3]'
-      }`}
+      className={`fixed left-0 right-0 z-50 transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+        visible ? 'translate-y-0' : '-translate-y-full'
+      } bg-gradient-to-r from-[#2BB1D6]/90 via-[#1E94B3]/90 via-[#F25430]/80 via-[#1E94B3]/90 to-[#2BB1D6]/90 backdrop-blur-xl border-b border-white/10 animate-gradient-flow`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-2.5 sm:px-10 lg:px-12 lg:py-3">
         <Link to="hero" smooth duration={500} className="cursor-pointer flex items-center gap-3">
           <img src="/assets/logo.png" alt="Pets Hero Logo" className="h-10 w-auto object-contain sm:h-11 lg:h-12" />
         </Link>
 
-        <div className="hidden md:flex items-center gap-5 lg:gap-6 xl:gap-8">
+        <div className="hidden md:flex items-center gap-1 lg:gap-2 relative">
           {navLinks.map((link) => (
-            <Link
+            <motion.div
               key={link.label}
-              to={link.to}
-              smooth
-              duration={500}
-              offset={-80}
-              className="cursor-pointer text-sm font-medium text-white/90 transition-all duration-200 hover:text-white hover:bg-[#F25430] px-4 py-2 rounded-full"
+              whileHover={{ y: -4, scale: 1.05 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 15 }}
             >
-              {link.label}
-            </Link>
+              <Link
+                to={link.to}
+                smooth
+                duration={500}
+                offset={-80}
+                className="relative cursor-pointer text-sm font-medium text-white/90 transition-all duration-200 hover:text-white hover:bg-[#F25430] px-4 py-2 rounded-full z-10 inline-block"
+              >
+                {link.label}
+                {activeSection === link.to && (
+                  <motion.div
+                    layoutId="activeIndicator"
+                    className="absolute inset-0 bg-[#F25430] rounded-full -z-10"
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  />
+                )}
+              </Link>
+            </motion.div>
           ))}
         </div>
 
         <div className="hidden md:flex items-center gap-2.5 lg:gap-3">
           {socialLinks.map(({ href, Icon, label }) => (
-            <a
+            <motion.a
               key={label}
               href={href}
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
+              whileHover={{ y: -3, scale: 1.15, rotate: 5 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 15 }}
               className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-white transition-all duration-200 hover:bg-[#F25430] hover:text-white"
             >
               <Icon />
-            </a>
+            </motion.a>
           ))}
         </div>
 
@@ -126,34 +179,45 @@ export default function Navbar() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="md:hidden overflow-hidden bg-[#1E94B3] border-t border-white/20"
+            className="md:hidden overflow-hidden bg-gradient-to-r from-[#2BB1D6]/95 via-[#1E94B3]/95 via-[#F25430]/85 via-[#1E94B3]/95 to-[#2BB1D6]/95 backdrop-blur-xl border-t border-white/20 animate-gradient-flow"
+            style={{ animationDelay: `${-((Date.now() - gradientStartTime.current) % 30000)}ms` }}
           >
             <div className="px-4 pb-4 pt-2 flex flex-col gap-3">
-              {navLinks.map((link) => (
-                <Link
+              {navLinks.map((link, i) => (
+                <motion.div
                   key={link.label}
-                  to={link.to}
-                  smooth
-                  duration={500}
-                  offset={-80}
-                  className="text-white/90 hover:text-white hover:bg-[#F25430] transition-all duration-200 text-base font-medium cursor-pointer py-2 px-3 rounded-lg"
-                  onClick={() => setMenuOpen(false)}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1, type: 'spring', stiffness: 300 }}
                 >
-                  {link.label}
-                </Link>
+                  <Link
+                    to={link.to}
+                    smooth
+                    duration={500}
+                    offset={-80}
+                    className="block text-white/90 hover:text-white hover:bg-[#F25430] transition-all duration-200 text-base font-medium cursor-pointer py-2 px-3 rounded-lg"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
               ))}
               <div className="flex items-center gap-3 pt-2">
-                {socialLinks.map(({ href, Icon, label }) => (
-                  <a
+                {socialLinks.map(({ href, Icon, label }, i) => (
+                  <motion.a
                     key={label}
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.3 + i * 0.1, type: 'spring', stiffness: 400 }}
+                    whileHover={{ y: -3, scale: 1.2, rotate: 10 }}
                     className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-[#F25430] hover:text-white transition-all duration-200"
                   >
                     <Icon />
-                  </a>
+                  </motion.a>
                 ))}
               </div>
             </div>

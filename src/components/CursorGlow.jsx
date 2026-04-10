@@ -1,100 +1,205 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+
+const PIXEL_PETS = {
+  cat: [
+    [
+      '............',
+      '..BB....BB..',
+      '.BPPB..BPPB.',
+      '.BCCCBBCCCB.',
+      'BBCCCCCCCCBB',
+      'BCDECCCCEDCB',
+      'BCCCCCCCCCCB',
+      'BCCCDDDDCCCB',
+      '.BCCCCCCCCB.',
+      '..BCCCCCCB..',
+      '...BBBBBB...',
+      '............',
+    ],
+    [
+      '............',
+      '..BB....BB..',
+      '.BPBB..BBPB.',
+      '.BCCCBBCCCB.',
+      'BBCCCCCCCCBB',
+      'BCDDCCCCDDCB',
+      'BCCCCCCCCCCB',
+      'BCCCDDDDCCCB',
+      '.BCCCCCCCCB.',
+      '..BCCCCCCB..',
+      '...BBBBBB...',
+      '............',
+    ],
+  ],
+  dog: [
+    [
+      '............',
+      '..BB....BB..',
+      '.BDDB..BDDB.',
+      '.BDDDBBDDDB.',
+      'BBCCCCCCCCBB',
+      'BCECCCCCCECB',
+      'BCCCCCCCCCCB',
+      'BCCCDDDDCCCB',
+      '.BCCCCCCCCB.',
+      '..BCCCCCCB..',
+      '...BBBBBB...',
+      '............',
+    ],
+    [
+      '............',
+      '..BB....BB..',
+      '.BDBB..BBDB.',
+      '.BDDDBBDDDB.',
+      'BBCCCCCCCCBB',
+      'BCDDCCCCDDCB',
+      'BCCCCCCCCCCB',
+      'BCCCDDDDCCCB',
+      '.BCCCCCCCCB.',
+      '..BCCCCCCB..',
+      '...BBBBBB...',
+      '............',
+    ],
+  ],
+};
+
+const PET_COLORS = {
+  cat: { B: '#1A2836', C: '#FFD7A1', D: '#F7B66B', E: '#2BB1D6', P: '#FF96B8' },
+  dog: { B: '#1A2836', C: '#E8C39E', D: '#C98E52', E: '#2BB1D6', P: '#F6B36B' },
+};
 
 export default function CursorGlow() {
-  const [pos, setPos] = useState({ x: -100, y: -100 });
-  const [isMoving, setIsMoving] = useState(false);
-  const timeoutRef = useRef(null);
-  const rafRef = useRef(null);
-  const posRef = useRef({ x: -100, y: -100 });
+  const [enabled, setEnabled] = useState(false);
+  const [petType, setPetType] = useState('cat');
+  const [frameIndex, setFrameIndex] = useState(0);
+  const petRef = useRef(null);
+  const targetRef = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+  const currentRef = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+  const facingRef = useRef(1);
+  const lastFrameSwitchRef = useRef(0);
 
   useEffect(() => {
-    const move = (e) => {
-      posRef.current = { x: e.clientX, y: e.clientY };
-      setIsMoving(true);
+    const media = window.matchMedia('(pointer: fine)');
+    const update = () => setEnabled(media.matches);
+    update();
 
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      timeoutRef.current = setTimeout(() => setIsMoving(false), 100);
-
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(() => {
-        setPos(posRef.current);
-      });
-    };
-
-    window.addEventListener('mousemove', move, { passive: true });
-    return () => {
-      window.removeEventListener('mousemove', move);
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
   }, []);
 
-  return (
-    <>
-      {/* Main glow - smooth transform, no transition lag */}
-      <div
-        className="pointer-events-none fixed z-[9998] hidden lg:block"
-        style={{
-          transform: `translate(${pos.x - 250}px, ${pos.y - 250}px)`,
-          width: 500,
-          height: 500,
-          background:
-            'radial-gradient(circle, rgba(43,177,214,0.08) 0%, rgba(242,84,48,0.05) 35%, transparent 65%)',
-          borderRadius: '50%',
-          willChange: 'transform',
-        }}
-      />
+  useEffect(() => {
+    if (!enabled) return;
 
-      {/* Inner bright core */}
-      <div
-        className="pointer-events-none fixed z-[9999] hidden lg:block"
-        style={{
-          transform: `translate(${pos.x - 100}px, ${pos.y - 100}px)`,
-          width: 200,
-          height: 200,
-          background:
-            'radial-gradient(circle, rgba(43,177,214,0.15) 0%, rgba(242,84,48,0.08) 45%, transparent 70%)',
-          borderRadius: '50%',
-          willChange: 'transform',
-        }}
-      />
+    const onMove = (event) => {
+      targetRef.current = { x: event.clientX + 20, y: event.clientY + 20 };
+    };
 
-      {/* Pulsing ring */}
-      <div
-        className={`pointer-events-none fixed z-[9997] hidden lg:block transition-all duration-300 ${
-          isMoving ? 'scale-150 opacity-60' : 'scale-100 opacity-100'
-        }`}
-        style={{
-          transform: `translate(${pos.x - 30}px, ${pos.y - 30}px) ${isMoving ? 'scale(1.5)' : 'scale(1)'}`,
-          width: 60,
-          height: 60,
-          border: '2px solid rgba(43,177,214,0.4)',
-          borderRadius: '50%',
-          willChange: 'transform, opacity',
-          animation: isMoving ? 'none' : 'pulse-ring 2s ease-in-out infinite',
-        }}
-      />
+    let rafId;
+    const follow = () => {
+      const now = performance.now();
+      const current = currentRef.current;
+      const target = targetRef.current;
+      const dx = target.x - current.x;
+      const dy = target.y - current.y;
+      const distance = Math.hypot(dx, dy);
 
-      {/* Accent dot */}
-      <div
-        className="pointer-events-none fixed z-[10000] hidden lg:block"
-        style={{
-          transform: `translate(${pos.x - 4}px, ${pos.y - 4}px)`,
-          width: 8,
-          height: 8,
-          background: 'linear-gradient(135deg, #2BB1D6, #F25430)',
-          borderRadius: '50%',
-          boxShadow: '0 0 10px rgba(43,177,214,0.5)',
-          willChange: 'transform',
-        }}
-      />
+      const chaseStrength = Math.max(0.08, Math.min(0.24, distance / 220));
 
-      <style>{`
-        @keyframes pulse-ring {
-          0%, 100% { transform: translate(${pos.x - 30}px, ${pos.y - 30}px) scale(1); opacity: 0.4; }
-          50% { transform: translate(${pos.x - 30}px, ${pos.y - 30}px) scale(1.3); opacity: 0.2; }
+      current.x += dx * chaseStrength;
+      current.y += dy * chaseStrength;
+      currentRef.current = current;
+
+      if (Math.abs(dx) > 1.5) {
+        facingRef.current = dx > 0 ? 1 : -1;
+      }
+
+      const runInterval =
+        distance > 140 ? 70 : distance > 90 ? 95 : distance > 45 ? 130 : 240;
+
+      if (now - lastFrameSwitchRef.current > runInterval) {
+        setFrameIndex((prev) => (prev + 1) % 2);
+        lastFrameSwitchRef.current = now;
+      }
+
+      const moving = distance > 18;
+      const gaitSpeed = distance > 140 ? 0.06 : distance > 90 ? 0.05 : distance > 45 ? 0.04 : 0.025;
+      const gait = Math.sin(now * gaitSpeed);
+      const hop = moving ? Math.abs(gait) * 3.2 : 0;
+      const bobAmplitude = moving ? 1.6 : 0.4;
+      const bob = Math.sin(now * 0.02) * bobAmplitude;
+      const lean = Math.max(-12, Math.min(12, dx * 0.05));
+      const stretchX = moving ? 1 + Math.abs(gait) * 0.12 : 1;
+      const stretchY = moving ? 1 - Math.abs(gait) * 0.08 : 1;
+
+      if (petRef.current) {
+        petRef.current.style.transform = `translate3d(${current.x - 24}px, ${current.y - 24 + bob - hop}px, 0) scaleX(${facingRef.current * stretchX}) scaleY(${stretchY}) rotate(${lean}deg)`;
+      }
+
+      rafId = requestAnimationFrame(follow);
+    };
+
+    window.addEventListener('mousemove', onMove, { passive: true });
+    rafId = requestAnimationFrame(follow);
+
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      cancelAnimationFrame(rafId);
+    };
+  }, [enabled]);
+
+  useEffect(() => {
+    if (!enabled) return;
+
+    const speciesTimer = setInterval(() => {
+      setPetType((prev) => (prev === 'cat' ? 'dog' : 'cat'));
+    }, 7000);
+
+    return () => {
+      clearInterval(speciesTimer);
+    };
+  }, [enabled]);
+
+  const pixels = useMemo(() => {
+    const sprite = PIXEL_PETS[petType][frameIndex];
+    const palette = PET_COLORS[petType];
+    const rects = [];
+
+    for (let y = 0; y < sprite.length; y += 1) {
+      for (let x = 0; x < sprite[y].length; x += 1) {
+        const code = sprite[y][x];
+        if (code !== '.') {
+          rects.push({ x, y, color: palette[code] ?? '#1A2836' });
         }
-      `}</style>
-    </>
+      }
+    }
+
+    return rects;
+  }, [petType, frameIndex]);
+
+  if (!enabled) return null;
+
+  return (
+    <div
+      ref={petRef}
+      className="pointer-events-none fixed left-0 top-0 z-[10000]"
+      style={{
+        width: 48,
+        height: 48,
+        willChange: 'transform',
+        filter: 'drop-shadow(0 4px 8px rgba(26,40,54,0.28))',
+      }}
+      aria-hidden="true"
+    >
+      <svg
+        viewBox="0 0 12 12"
+        width="48"
+        height="48"
+        style={{ imageRendering: 'pixelated' }}
+      >
+        {pixels.map((px) => (
+          <rect key={`${px.x}-${px.y}`} x={px.x} y={px.y} width="1" height="1" fill={px.color} />
+        ))}
+      </svg>
+    </div>
   );
 }

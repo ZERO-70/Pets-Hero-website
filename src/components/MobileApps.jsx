@@ -194,12 +194,17 @@ export default function MobileApps() {
               transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
             >
               <div className="relative">
-                <div className="absolute -inset-6 rounded-full bg-primary/20 blur-3xl" />
-                <img
-                  src={currentTab.mockup}
-                  alt={`${currentTab.label} mockup`}
-                  className="relative h-[320px] w-auto object-contain rounded-3xl shadow-2xl sm:h-[380px]"
-                />
+                <div className="absolute -inset-8 rounded-full bg-primary/20 blur-3xl" />
+                <div className="polaroid-app relative">
+                  <img
+                    src={currentTab.mockup}
+                    alt={`${currentTab.label} mockup`}
+                    className="h-[320px] w-auto object-contain rounded-xl sm:h-[380px]"
+                  />
+                  <div className="absolute bottom-3 left-0 right-0 text-center text-sm font-semibold text-[#1A2836]/60">
+                    {currentTab.label} 📱
+                  </div>
+                </div>
               </div>
             </motion.div>
 

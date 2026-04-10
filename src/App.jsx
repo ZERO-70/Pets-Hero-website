@@ -1,5 +1,4 @@
 import CursorGlow from './components/CursorGlow'
-import TopBar from './components/TopBar'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Services from './components/Services'
@@ -12,7 +11,6 @@ function App() {
   return (
     <div className="overflow-x-hidden">
       <CursorGlow />
-      <TopBar />
       <Navbar />
       <Hero />
       <Services />

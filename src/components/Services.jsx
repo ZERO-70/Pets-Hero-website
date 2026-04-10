@@ -89,15 +89,29 @@ export default function Services() {
               variants={cardVariants}
               whileHover={{ y: -8, scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-              className={`group relative flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-xl sm:p-7 ${accentColor} ${glowColor || ''} ${
+              className={`group card-with-ears flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-xl sm:p-7 ${accentColor} ${glowColor || ''} ${
                 featured ? 'ring-2 ring-accent/30' : ''
               }`}
+              style={{ '--ear-color': featured ? '#F25430' : (title === 'Doctors' ? '#1A2836' : '#2BB1D6') }}
             >
               {featured && (
-                <motion.div 
+                <motion.div
                   className="absolute -top-3 right-5 rounded-full bg-gradient-to-r from-accent to-accent-light px-4 py-1 text-[11px] font-bold text-white shadow-md shadow-accent/20"
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
+                  animate={{
+                    rotate: [0, -3, 3, -2, 2, 0],
+                    scale: [1, 1.05, 0.98, 1.02, 1],
+                  }}
+                  transition={{
+                    duration: 0.6,
+                    repeat: Infinity,
+                    repeatDelay: 1.5,
+                    ease: 'easeInOut',
+                  }}
+                  whileHover={{
+                    rotate: [0, -8, 8, -5, 5, 0],
+                    scale: 1.1,
+                    transition: { duration: 0.4, repeat: 0 },
+                  }}
                 >
                   ⭐ Popular
                 </motion.div>

@@ -17,7 +17,7 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
   }
 
   body {
@@ -156,5 +156,186 @@
 
   .text-bouncy:hover {
     transform: scale(1.05) rotate(-2deg);
+  }
+
+  /* Polaroid Photo Frame Style */
+  .polaroid {
+    background: white;
+    padding: 12px 12px 40px 12px;
+    border-radius: 4px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+    transform: rotate(-3deg);
+    transition: all 0.3s ease;
+  }
+
+  .polaroid:hover {
+    transform: rotate(0deg) scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .polaroid img {
+    border-radius: 2px;
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Alternative Polaroid - slight right rotation */
+  .polaroid-right {
+    background: white;
+    padding: 12px 12px 40px 12px;
+    border-radius: 4px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+    transform: rotate(3deg);
+    transition: all 0.3s ease;
+  }
+
+  .polaroid-right:hover {
+    transform: rotate(0deg) scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  /* App mockup polaroid - larger padding */
+  .polaroid-app {
+    background: white;
+    padding: 16px 16px 50px 16px;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(43, 177, 214, 0.2), 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: rotate(-2deg);
+    transition: all 0.3s ease;
+  }
+
+  .polaroid-app:hover {
+    transform: rotate(0deg) scale(1.02);
+    box-shadow: 0 16px 50px rgba(43, 177, 214, 0.25), 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Animated gradient flow for navbar - seamless circular motion */
+  .animate-gradient-flow {
+    background-size: 400% 100%;
+    animation: gradient-flow 30s linear infinite;
+  }
+
+  @keyframes gradient-flow {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 400% 50%;
+    }
+  }
+
+  /* Pet Ears for Cards */
+  .card-with-ears {
+    position: relative;
+  }
+
+  .card-with-ears::before,
+  .card-with-ears::after {
+    content: '';
+    position: absolute;
+    top: -20px;
+    width: 40px;
+    height: 40px;
+    background: var(--ear-color, #2BB1D6);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    z-index: -1;
+    transition: all 0.3s ease;
+    opacity: 0.9;
+  }
+
+  /* Left ear */
+  .card-with-ears::before {
+    left: 20px;
+    transform: rotate(-30deg);
+    border-top-left-radius: 80%;
+    border-top-right-radius: 20%;
+  }
+
+  /* Right ear */
+  .card-with-ears::after {
+    right: 20px;
+    transform: rotate(30deg);
+    border-top-left-radius: 20%;
+    border-top-right-radius: 80%;
+  }
+
+  /* Hover effect - ears jiggle/wobble */
+  .card-with-ears:hover::before {
+    animation: ear-jiggle-left 0.5s ease-in-out;
+  }
+
+  .card-with-ears:hover::after {
+    animation: ear-jiggle-right 0.5s ease-in-out;
+  }
+
+  @keyframes ear-jiggle-left {
+    0%, 100% { transform: rotate(-30deg) translateY(0); }
+    25% { transform: rotate(-40deg) translateY(-3px); }
+    50% { transform: rotate(-25deg) translateY(-1px); }
+    75% { transform: rotate(-35deg) translateY(-2px); }
+  }
+
+  @keyframes ear-jiggle-right {
+    0%, 100% { transform: rotate(30deg) translateY(0); }
+    25% { transform: rotate(40deg) translateY(-3px); }
+    50% { transform: rotate(25deg) translateY(-1px); }
+    75% { transform: rotate(35deg) translateY(-2px); }
+  }
+
+  /* Cat ears variation - more pointed */
+  .card-cat-ears::before,
+  .card-cat-ears::after {
+    content: '';
+    position: absolute;
+    top: -18px;
+    width: 0;
+    height: 0;
+    background: transparent;
+    z-index: -1;
+    transition: all 0.3s ease;
+  }
+
+  .card-cat-ears::before {
+    left: 25px;
+    border-left: 18px solid transparent;
+    border-right: 18px solid transparent;
+    border-bottom: 35px solid currentColor;
+    transform: rotate(-15deg);
+  }
+
+  .card-cat-ears::after {
+    right: 25px;
+    border-left: 18px solid transparent;
+    border-right: 18px solid transparent;
+    border-bottom: 35px solid currentColor;
+    transform: rotate(15deg);
+  }
+
+  /* Inner ear detail */
+  .card-cat-ears .ear-inner::before,
+  .card-cat-ears .ear-inner::after {
+    content: '';
+    position: absolute;
+    top: -12px;
+    width: 0;
+    height: 0;
+    z-index: -1;
+  }
+
+  .card-cat-ears .ear-inner::before {
+    left: 32px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 18px solid rgba(255, 255, 255, 0.4);
+    transform: rotate(-15deg);
+  }
+
+  .card-cat-ears .ear-inner::after {
+    right: 32px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 18px solid rgba(255, 255, 255, 0.4);
+    transform: rotate(15deg);
   }
 }

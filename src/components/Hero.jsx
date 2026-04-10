@@ -5,10 +5,15 @@ import AnimatedPawTrail from './AnimatedPawTrail';
 
 const PHRASES = [
   'Simplify Pet care\nAmplify Love ❤️',
-  'Expert Vet Consultations',
-  'Premium Pet Products',
-  'Trusted Service Providers',
+  'Expert Vet Consultations 🩺',
+  'Premium Pet Products ⭐',
+  'Trusted Service Providers 🤝',
 ];
+
+// Helper to split string into grapheme clusters (handles emojis properly)
+const splitGraphemes = (str) => {
+  return Array.from(str);
+};
 
 export default function Hero() {
   const [phraseIndex, setPhraseIndex] = useState(0);
@@ -18,20 +23,22 @@ export default function Hero() {
 
   useEffect(() => {
     const current = PHRASES[phraseIndex];
-    if (!deleting && charIndex < current.length) {
+    const graphemes = splitGraphemes(current);
+
+    if (!deleting && charIndex < graphemes.length) {
       const t = setTimeout(() => {
-        setDisplayed(current.slice(0, charIndex + 1));
+        setDisplayed(graphemes.slice(0, charIndex + 1).join(''));
         setCharIndex((c) => c + 1);
       }, 50);
       return () => clearTimeout(t);
     }
-    if (!deleting && charIndex === current.length) {
+    if (!deleting && charIndex === graphemes.length) {
       const t = setTimeout(() => setDeleting(true), 2200);
       return () => clearTimeout(t);
     }
     if (deleting && charIndex > 0) {
       const t = setTimeout(() => {
-        setDisplayed(current.slice(0, charIndex - 1));
+        setDisplayed(graphemes.slice(0, charIndex - 1).join(''));
         setCharIndex((c) => c - 1);
       }, 28);
       return () => clearTimeout(t);
@@ -81,9 +88,26 @@ export default function Hero() {
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.1 }}
-              className="relative mb-6 inline-flex items-center gap-2.5 rounded-full bg-white/90 px-5 py-2.5 backdrop-blur-sm ring-2 ring-[#2BB1D6]/40 shadow-lg shadow-[#2BB1D6]/25"
+              animate={{
+                opacity: 1,
+                scale: 1,
+                rotate: [0, -2, 2, -1, 1, 0],
+              }}
+              transition={{
+                delay: 0.1,
+                rotate: {
+                  duration: 0.6,
+                  repeat: Infinity,
+                  repeatDelay: 2,
+                  ease: 'easeInOut',
+                },
+              }}
+              whileHover={{
+                scale: 1.08,
+                rotate: [0, -5, 5, -3, 3, 0],
+                transition: { duration: 0.4 },
+              }}
+              className="relative mb-6 inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#2BB1D6]/25 via-[#1E94B3]/20 to-[#F25430]/20 px-5 py-2.5 backdrop-blur-sm ring-2 ring-[#2BB1D6]/35 shadow-lg shadow-[#2BB1D6]/20 cursor-pointer"
             >
               {/* Pulsing ring animation - solid primary color */}
               <span className="absolute inset-0 rounded-full ring-2 ring-[#2BB1D6]/50 animate-ping opacity-40" />
@@ -93,7 +117,7 @@ export default function Hero() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#F25430] opacity-75" />
                 <span className="relative inline-flex h-full w-full rounded-full bg-[#F25430]" />
               </span>
-              <span className="relative text-sm font-semibold tracking-widest text-[#2BB1D6] uppercase">
+              <span className="text-cute-bold relative text-sm tracking-[0.16em] text-[#1A2836] uppercase">
                 Pets Hero
               </span>
             </motion.div>
