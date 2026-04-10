@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
+  --font-family-cute: 'Nunito', sans-serif;
   --color-primary: #2BB1D6;
   --color-primary-dark: #1E94B3;
   --color-accent: #F25430;
@@ -8,6 +10,9 @@
   --color-light: #F5F1E6;
   --color-dark: #1A2836;
   --color-dark-light: #243442;
+  --color-cream: #FDF6E3;
+  --color-paw: #FFB366;
+  --color-soft-pink: #FFD1DC;
 }
 
 @layer base {
@@ -16,11 +21,18 @@
   }
 
   body {
-    font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Nunito', 'Segoe UI', sans-serif;
     background-color: #F5F1E6;
     color: #1A2836;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Cute headings with extra weight */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
   }
 
   #root {
@@ -36,15 +48,15 @@
 
 @layer utilities {
   .glass {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(43, 177, 214, 0.2);
   }
 
   .glass-dark {
-    background: rgba(26, 40, 54, 0.6);
+    background: rgba(245, 241, 230, 0.85);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(43, 177, 214, 0.15);
   }
 
   .text-gradient {
@@ -81,7 +93,7 @@
 
   /* Continuous gradient orb animation - smooth breathing effect */
   .gradient-orb {
-    background: radial-gradient(circle at 40% 40%, rgba(43,177,214,0.6) 0%, rgba(30,148,179,0.35) 30%, rgba(242,84,48,0.15) 55%, transparent 75%);
+    background: radial-gradient(circle at 40% 40%, rgba(43,177,214,0.5) 0%, rgba(30,148,179,0.35) 30%, rgba(242,84,48,0.2) 55%, transparent 75%);
     animation: orb-breathe 5s ease-in-out infinite;
   }
 
@@ -122,5 +134,27 @@
   @keyframes gradient-flow {
     0% { background-position: 0% 50%; }
     100% { background-position: 300% 50%; }
+  }
+
+  /* Cute text styles for pet-friendly vibe */
+  .text-cute {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .text-cute-bold {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  .text-bouncy {
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+
+  .text-bouncy:hover {
+    transform: scale(1.05) rotate(-2deg);
   }
 }

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { MapPin, Phone, Clock } from 'lucide-react';
+import { MapPin, Phone, Clock, Heart } from 'lucide-react';
+import PawPrints from './PawPrints';
 
 const contactItems = [
   {
@@ -29,8 +30,8 @@ const contactItems = [
   {
     icon: Clock,
     title: 'Hours',
-    iconBg: 'bg-dark/8',
-    iconColor: 'text-dark',
+    iconBg: 'bg-[#2BB1D6]/10',
+    iconColor: 'text-[#2BB1D6]',
     content: (
       <p className="text-sm leading-relaxed text-dark/60">
         Sun – Thu: 9:00 AM – 6:00 PM<br />
@@ -42,7 +43,10 @@ const contactItems = [
 
 export default function FindUs() {
   return (
-    <section id="find-us" className="bg-light py-24">
+    <section id="find-us" className="relative bg-[#F5F1E6] py-24">
+      {/* Floating paw prints */}
+      <PawPrints count={3} />
+      
       <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -51,11 +55,11 @@ export default function FindUs() {
           transition={{ duration: 0.6 }}
           className="mb-14 text-center"
         >
-          <span className="mb-4 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-sm font-semibold tracking-wider text-primary uppercase">
-            Location
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#2BB1D6]/10 px-4 py-1.5 text-sm font-semibold tracking-wider text-[#2BB1D6] uppercase">
+            <MapPin size={14} /> Location <span>📍</span>
           </span>
-          <h2 className="mb-5 text-4xl font-bold text-dark sm:text-5xl">Find Us</h2>
-          <p className="mx-auto max-w-xl text-lg text-dark/55">
+          <h2 className="mb-5 text-4xl font-bold text-[#1A2836] sm:text-5xl">Find Us 🗺️</h2>
+          <p className="mx-auto max-w-xl text-lg text-[#1A2836]/55">
             Visit our office or get in touch — we're always here to help with your pet care needs.
           </p>
         </motion.div>
@@ -71,7 +75,7 @@ export default function FindUs() {
             {contactItems.map(({ icon: Icon, title, iconBg, iconColor, content }) => (
               <div
                 key={title}
-                className="group flex items-start gap-4 rounded-2xl border border-dark/8 bg-white p-5 shadow-sm transition-all duration-300 hover:shadow-md hover:border-primary/20"
+                className="group flex items-start gap-4 rounded-2xl border border-[#1A2836]/8 bg-white p-5 shadow-sm transition-all duration-300 hover:shadow-md hover:border-[#2BB1D6]/30"
               >
                 <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${iconBg} transition-colors duration-300`}>
                   <Icon size={20} className={iconColor} />
@@ -89,7 +93,7 @@ export default function FindUs() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="overflow-hidden rounded-2xl border border-dark/8 shadow-lg lg:col-span-2"
+            className="overflow-hidden rounded-2xl border border-[#2BB1D6]/20 shadow-lg lg:col-span-2"
             style={{ minHeight: '360px' }}
           >
             <iframe

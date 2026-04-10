@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import PawPrints from './PawPrints';
+import AnimatedPawTrail from './AnimatedPawTrail';
 
 const PHRASES = [
-  'Your Partner For Pet Care',
+  'Simplify Pet care\nAmplify Love ❤️',
   'Expert Vet Consultations',
   'Premium Pet Products',
   'Trusted Service Providers',
@@ -43,21 +45,27 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen items-center overflow-hidden bg-gradient-to-br from-dark via-dark-light to-dark pt-24"
+      className="relative flex min-h-screen items-center overflow-hidden bg-gradient-to-br from-light via-white to-cream pt-24"
     >
       {/* Animated gradient orb - continuous primary color loop */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -top-32 -left-32 h-[600px] w-[600px] rounded-full gradient-orb blur-[100px]" />
-        <div className="absolute -bottom-40 -right-40 h-[500px] w-[500px] rounded-full bg-accent/10 blur-[100px]" />
-        <div className="absolute top-1/2 left-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[120px]" />
+        <div className="absolute -bottom-40 -right-40 h-[500px] w-[500px] rounded-full bg-[#2BB1D6]/25 blur-[100px]" />
+        <div className="absolute top-1/2 left-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2BB1D6]/20 blur-[120px]" />
       </div>
 
-      {/* Subtle grid pattern */}
+      {/* Animated paw trail - goes around the hero */}
+      <AnimatedPawTrail />
+      
+      {/* Fewer floating paws in background */}
+      <PawPrints count={4} />
+
+      {/* Subtle grid pattern with primary color */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px)',
+            'linear-gradient(rgba(43,177,214,.15) 1px, transparent 1px), linear-gradient(90deg, rgba(43,177,214,.15) 1px, transparent 1px)',
           backgroundSize: '60px 60px',
         }}
       />
@@ -75,31 +83,31 @@ export default function Hero() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.1 }}
-              className="relative mb-6 inline-flex items-center gap-2.5 rounded-full bg-dark-light/80 px-5 py-2.5 backdrop-blur-sm ring-1 ring-primary/30"
+              className="relative mb-6 inline-flex items-center gap-2.5 rounded-full bg-white/90 px-5 py-2.5 backdrop-blur-sm ring-2 ring-[#2BB1D6]/40 shadow-lg shadow-[#2BB1D6]/25"
             >
-              {/* Pulsing ring animation - subtle blinking */}
-              <span className="absolute inset-0 rounded-full ring-1 ring-primary/40 animate-ping opacity-25" />
-              <span className="absolute -inset-0.5 rounded-full ring-1 ring-primary/20 animate-pulse" />
+              {/* Pulsing ring animation - solid primary color */}
+              <span className="absolute inset-0 rounded-full ring-2 ring-[#2BB1D6]/50 animate-ping opacity-40" />
+              <span className="absolute -inset-1 rounded-full ring-1 ring-[#2BB1D6]/30 animate-pulse" />
 
               <span className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
-                <span className="relative inline-flex h-full w-full rounded-full bg-accent" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#F25430] opacity-75" />
+                <span className="relative inline-flex h-full w-full rounded-full bg-[#F25430]" />
               </span>
-              <span className="relative text-sm font-semibold tracking-widest text-light/90 uppercase">
+              <span className="relative text-sm font-semibold tracking-widest text-[#2BB1D6] uppercase">
                 Pets Hero
               </span>
             </motion.div>
 
-            <h1 className="mb-6 min-h-[3em] text-4xl font-extrabold leading-[1.15] text-light sm:text-5xl xl:text-6xl">
+            <h1 className="mb-6 min-h-[3em] text-4xl font-extrabold leading-[1.15] text-dark sm:text-5xl xl:text-6xl">
               {displayed}
-              <span className="ml-0.5 inline-block w-[3px] h-[1em] bg-accent animate-pulse rounded-full align-middle" />
+              <span className="ml-0.5 inline-block w-[3px] h-[1em] bg-[#2BB1D6] animate-pulse rounded-full align-middle" />
             </h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="mx-auto mb-10 max-w-lg text-base leading-relaxed text-light/60 sm:text-lg lg:mx-0"
+              className="mx-auto mb-10 max-w-lg text-base leading-relaxed text-dark/60 sm:text-lg lg:mx-0"
             >
               At Pets Hero, we are dedicated to providing exceptional services and products for
               your beloved pets. Our platform brings together three unique vendors — each
@@ -111,7 +119,7 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
-              className="mt-12 flex flex-wrap items-center justify-center gap-6 sm:gap-8 lg:justify-start"
+              className="mt-10 flex flex-wrap items-center justify-center gap-8 lg:justify-start"
             >
               {[
                 { value: '3+', label: 'Vendor Types' },
@@ -121,7 +129,7 @@ export default function Hero() {
                 <div key={label} className="flex items-center gap-8">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-gradient">{value}</div>
-                    <div className="mt-1 text-xs text-light/40">{label}</div>
+                    <div className="mt-0.5 text-xs text-dark/40">{label}</div>
                   </div>
                   {i < 2 && <div className="hidden h-8 w-px bg-light/10 sm:block" />}
                 </div>
@@ -153,7 +161,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 text-light/30"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 text-primary/40"
         >
           <span className="text-[10px] font-medium tracking-[0.2em] uppercase">Scroll</span>
           <div className="h-8 w-px bg-gradient-to-b from-light/30 to-transparent" />

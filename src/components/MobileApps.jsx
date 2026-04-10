@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Bell, ShoppingBag, Scissors, UserCheck, Stethoscope, Users,
-  Store, Wallet,
+  Store, Wallet, Heart, Sparkles
 } from 'lucide-react';
+import PawPrints from './PawPrints';
 
 const AndroidIcon = () => (
   <svg viewBox="0 0 576 512" fill="currentColor" className="w-4 h-4">
@@ -26,16 +27,19 @@ const tabs = [
     features: [
       {
         icon: Bell,
+        emoji: '🔔',
         title: 'Smart Notifications',
         desc: 'Pet order notifications, upcoming vaccinations, reminders, birthday and food alerts.',
       },
       {
         icon: ShoppingBag,
+        emoji: '🛍️',
         title: 'Store',
         desc: 'Shop premium pet supplies at unbeatable prices, with easy checkout and delivery.',
       },
       {
         icon: Scissors,
+        emoji: '✂️',
         title: 'Pet Services',
         desc: 'Book professional grooming, boarding, sitting, and training services on demand.',
       },
@@ -49,16 +53,19 @@ const tabs = [
     features: [
       {
         icon: Stethoscope,
+        emoji: '🩺',
         title: 'Doctor Consultation',
         desc: 'Provide expert medical consultations to your patients online and onsite via video.',
       },
       {
         icon: Users,
+        emoji: '🤝',
         title: 'Service Provider',
         desc: 'Connect with pet owners for grooming, sitting, boarding, and more through the app.',
       },
       {
         icon: Wallet,
+        emoji: '💳',
         title: 'Wallet & Transactions',
         desc: 'Manage all transactions securely — products, services, or consultations — in one place.',
       },
@@ -88,7 +95,10 @@ export default function MobileApps() {
   const currentTab = tabs.find((t) => t.id === activeTab);
 
   return (
-    <section id="mobile-apps" className="py-24 bg-dark overflow-hidden">
+    <section id="mobile-apps" className="relative py-24 bg-gradient-to-br from-[#2BB1D6]/10 via-[#F5F1E6] to-[#F25430]/5 overflow-hidden">
+      {/* Floating paw prints */}
+      <PawPrints count={3} />
+      
       <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -97,19 +107,23 @@ export default function MobileApps() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <span className="inline-block bg-accent/20 text-accent font-semibold text-sm px-4 py-1.5 rounded-full mb-4 tracking-wider uppercase">
-            Download Now
-          </span>
-          <h2 className="text-4xl sm:text-5xl font-bold text-light mb-5">
-            Our Mobile Apps
+          <motion.span 
+            className="inline-flex items-center gap-2 bg-[#F25430]/20 text-[#F25430] font-semibold text-sm px-4 py-1.5 rounded-full mb-4 tracking-wider uppercase"
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <Sparkles size={14} /> Download Now <Sparkles size={14} />
+          </motion.span>
+          <h2 className="text-4xl sm:text-5xl font-bold text-[#1A2836] mb-5">
+            📱 Our Mobile Apps 🐾
           </h2>
-          <p className="text-light/60 text-lg max-w-xl mx-auto">
+          <p className="text-[#1A2836]/60 text-lg max-w-xl mx-auto">
             Available for both pet owners and vendors — get started in minutes.
           </p>
         </motion.div>
 
         <div className="flex justify-center mb-10">
-          <div className="inline-flex bg-light/10 rounded-full p-1 gap-1">
+          <div className="inline-flex bg-white/70 rounded-full p-1 gap-1 shadow-sm">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -117,13 +131,13 @@ export default function MobileApps() {
                 className={`relative px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
                   activeTab === tab.id
                     ? 'text-white'
-                    : 'text-light/60 hover:text-light'
+                    : 'text-[#1A2836]/60 hover:text-[#2BB1D6]'
                 }`}
               >
                 {activeTab === tab.id && (
                   <motion.div
                     layoutId="tab-pill"
-                    className="absolute inset-0 bg-accent rounded-full"
+                    className="absolute inset-0 bg-[#2BB1D6] rounded-full"
                     transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                   />
                 )}
@@ -149,20 +163,26 @@ export default function MobileApps() {
             className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center"
           >
             <div className="space-y-6">
-              {currentTab.features.map(({ icon: Icon, title, desc }, i) => (
+              {currentTab.features.map(({ icon: Icon, emoji, title, desc }, i) => (
                 <motion.div
                   key={title}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className="flex gap-4 group"
+                  whileHover={{ x: 8, scale: 1.02 }}
+                  className="flex gap-4 group cursor-pointer"
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center shrink-0 group-hover:bg-accent/30 transition-colors duration-300">
-                    <Icon size={22} className="text-primary group-hover:text-accent transition-colors duration-300" />
-                  </div>
+                  <motion.div 
+                    className="w-12 h-12 rounded-2xl bg-[#2BB1D6]/15 flex items-center justify-center shrink-0 group-hover:bg-[#2BB1D6]/25 transition-colors duration-300"
+                    whileHover={{ rotate: 10, scale: 1.1 }}
+                    transition={{ type: 'spring', stiffness: 400 }}
+                  >
+                    <span className="text-lg mr-0.5">{emoji}</span>
+                    <Icon size={20} className="text-[#2BB1D6] group-hover:text-[#F25430] transition-colors duration-300" />
+                  </motion.div>
                   <div>
-                    <h4 className="font-semibold text-light mb-1">{title}</h4>
-                    <p className="text-light/60 text-sm leading-relaxed">{desc}</p>
+                    <h4 className="font-semibold text-[#1A2836] mb-1">{title}</h4>
+                    <p className="text-[#1A2836]/60 text-sm leading-relaxed">{desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -184,39 +204,57 @@ export default function MobileApps() {
             </motion.div>
 
             <div className="flex flex-col gap-4 items-center lg:items-start">
-              <h3 className="text-2xl font-bold text-light">{currentTab.label}</h3>
-              <p className="text-light/60 text-sm leading-relaxed text-center lg:text-left">
+              <h3 className="text-2xl font-bold text-[#1A2836]">{currentTab.label}</h3>
+              <p className="text-[#1A2836]/60 text-sm leading-relaxed text-center lg:text-left">
                 {activeTab === 'customer'
                   ? 'Download the Pets Hero customer app and access everything your pet needs — from shopping to vet consultations.'
                   : 'Join Pets Hero as a vendor, doctor, or service provider and grow your business by connecting with thousands of pet owners.'}
               </p>
               <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                <a
+                <motion.a
                   href={currentTab.playLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 bg-accent hover:bg-accent/90 text-white font-semibold px-5 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-accent/30 hover:scale-105 text-sm"
+                  className="flex items-center gap-2 bg-[#F25430] hover:bg-[#F25430]/90 text-white font-semibold px-5 py-3 rounded-full text-sm"
+                  whileHover={{ scale: 1.08, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: 'spring', stiffness: 400 }}
                 >
                   <AndroidIcon />
                   Google Play
-                </a>
-                <button className="flex items-center gap-2 bg-light/10 hover:bg-light/20 text-light font-semibold px-5 py-3 rounded-full border border-light/20 transition-all duration-300 hover:scale-105 text-sm">
+                </motion.a>
+                <motion.button 
+                  className="flex items-center gap-2 bg-white hover:bg-[#2BB1D6]/10 text-[#1A2836] font-semibold px-5 py-3 rounded-full border border-[#2BB1D6]/20 text-sm"
+                  whileHover={{ scale: 1.08, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: 'spring', stiffness: 400 }}
+                >
                   <AppleIcon />
                   App Store
-                </button>
+                </motion.button>
               </div>
               <div className="flex items-center gap-2 mt-2">
                 <div className="flex -space-x-2">
                   {['🐕', '🐈', '🐇'].map((emoji, i) => (
-                    <div
+                    <motion.div
                       key={i}
-                      className="w-8 h-8 rounded-full bg-primary/30 border-2 border-dark flex items-center justify-center text-sm"
+                      className="w-8 h-8 rounded-full bg-[#2BB1D6]/30 border-2 border-white flex items-center justify-center text-sm"
+                      animate={{ y: [0, -4, 0] }}
+                      transition={{ duration: 1.5, delay: i * 0.2, repeat: Infinity }}
+                      whileHover={{ scale: 1.2, rotate: 10 }}
                     >
                       {emoji}
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
-                <span className="text-light/50 text-xs">Thousands of happy pets</span>
+                <motion.span 
+                  className="text-[#1A2836]/50 text-xs flex items-center gap-1"
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <Heart size={10} className="text-[#F25430]" fill="currentColor" />
+                  Thousands of happy pets
+                </motion.span>
               </div>
             </div>
           </motion.div>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-scroll';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -36,20 +36,43 @@ const socialLinks = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Always show at top
+      if (currentScrollY < 50) {
+        setVisible(true);
+        setScrolled(false);
+      } else {
+        setScrolled(true);
+        // Hide when scrolling down, show when scrolling up
+        if (currentScrollY > lastScrollY.current) {
+          setVisible(false); // Scrolling down - hide
+        } else {
+          setVisible(true); // Scrolling up - show
+        }
+      }
+      
+      lastScrollY.current = currentScrollY;
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+        visible ? 'top-0' : '-top-20'
+      } ${
         scrolled
-          ? 'glass-dark shadow-lg shadow-dark/20'
-          : 'bg-dark/80 backdrop-blur-sm'
+          ? 'bg-[#2BB1D6] shadow-lg shadow-[#2BB1D6]/30'
+          : 'bg-gradient-to-r from-[#2BB1D6] to-[#1E94B3]'
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-2.5 sm:px-10 lg:px-12 lg:py-3">
@@ -65,7 +88,7 @@ export default function Navbar() {
               smooth
               duration={500}
               offset={-80}
-              className="cursor-pointer text-sm font-medium text-light/80 transition-colors hover:text-accent"
+              className="cursor-pointer text-sm font-medium text-white/90 transition-all duration-200 hover:text-white hover:bg-[#F25430] px-4 py-2 rounded-full"
             >
               {link.label}
             </Link>
@@ -80,7 +103,7 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-light/10 text-light transition-all duration-200 hover:bg-accent hover:text-white"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-white transition-all duration-200 hover:bg-[#F25430] hover:text-white"
             >
               <Icon />
             </a>
@@ -88,7 +111,7 @@ export default function Navbar() {
         </div>
 
         <button
-          className="md:hidden text-light p-1"
+          className="md:hidden text-white p-1"
           onClick={() => setMenuOpen((v) => !v)}
           aria-label="Toggle menu"
         >
@@ -103,7 +126,7 @@ export default function Navbar() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="md:hidden overflow-hidden bg-dark border-t border-light/10"
+            className="md:hidden overflow-hidden bg-[#1E94B3] border-t border-white/20"
           >
             <div className="px-4 pb-4 pt-2 flex flex-col gap-3">
               {navLinks.map((link) => (
@@ -113,7 +136,7 @@ export default function Navbar() {
                   smooth
                   duration={500}
                   offset={-80}
-                  className="text-light/80 hover:text-accent transition-colors text-base font-medium cursor-pointer py-1"
+                  className="text-white/90 hover:text-white hover:bg-[#F25430] transition-all duration-200 text-base font-medium cursor-pointer py-2 px-3 rounded-lg"
                   onClick={() => setMenuOpen(false)}
                 >
                   {link.label}
@@ -127,7 +150,7 @@ export default function Navbar() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="w-8 h-8 rounded-full bg-light/10 flex items-center justify-center text-light hover:bg-accent hover:text-white transition-all duration-200"
+                    className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-[#F25430] hover:text-white transition-all duration-200"
                   >
                     <Icon />
                   </a>

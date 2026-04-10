@@ -1,5 +1,6 @@
 import { Link } from 'react-scroll';
 import { Phone } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const TikTokIcon = () => (
   <svg viewBox="0 0 448 512" fill="currentColor" className="w-4 h-4">
@@ -35,21 +36,39 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-dark pt-14 pb-6">
+    <footer className="relative bg-gradient-to-br from-[#2BB1D6]/10 via-[#F5F1E6] to-[#F25430]/10 pt-14 pb-6">
+      {/* Decorative paw prints at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 overflow-hidden pointer-events-none opacity-10">
+        <div className="flex justify-center gap-8 pb-4">
+          {['🐾', '🐕', '🐈', '🐇', '🐾'].map((emoji, i) => (
+            <motion.span
+              key={i}
+              className="text-2xl"
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 2, delay: i * 0.2, repeat: Infinity }}
+            >
+              {emoji}
+            </motion.span>
+          ))}
+        </div>
+      </div>
+      
       <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-light/10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-[#2BB1D6]/10">
           <div>
             <Link to="hero" smooth duration={500} className="cursor-pointer inline-block mb-4">
               <img src="/assets/logo.png" alt="Pets Hero" className="h-14 w-auto object-contain" />
             </Link>
-            <p className="text-light/50 text-sm leading-relaxed max-w-xs">
-              Your partner for complete pet care — connecting pet owners with services, products,
+            <p className="text-[#1A2836]/60 text-sm leading-relaxed max-w-xs">
+              Your partner for complete pet care 🐾 — connecting pet owners with services, products,
               and expert veterinary care in Saudi Arabia.
             </p>
           </div>
 
           <div>
-            <h5 className="font-semibold text-light mb-4">Quick Links</h5>
+            <h5 className="font-semibold text-[#1A2836] mb-4 flex items-center gap-2">
+              Quick Links <span>🦴</span>
+            </h5>
             <ul className="space-y-2.5">
               {navLinks.map(({ label, to }) => (
                 <li key={label}>
@@ -58,7 +77,7 @@ export default function Footer() {
                     smooth
                     duration={500}
                     offset={-80}
-                    className="text-light/50 hover:text-accent transition-colors text-sm cursor-pointer"
+                    className="text-[#1A2836]/60 hover:text-[#2BB1D6] transition-colors text-sm cursor-pointer"
                   >
                     {label}
                   </Link>
@@ -68,7 +87,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h5 className="font-semibold text-light mb-4">Connect With Us</h5>
+            <h5 className="font-semibold text-[#1A2836] mb-4 flex items-center gap-2">
+              Connect With Us <span>❤️</span>
+            </h5>
             <div className="flex items-center gap-3 mb-6">
               {socialLinks.map(({ href, Icon, label, iconProps }) => (
                 <a
@@ -77,15 +98,15 @@ export default function Footer() {
                   target={href.startsWith('tel') ? undefined : '_blank'}
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-10 h-10 rounded-full bg-light/10 flex items-center justify-center text-light hover:bg-accent hover:text-white transition-all duration-200"
+                  className="w-10 h-10 rounded-full bg-[#2BB1D6]/10 flex items-center justify-center text-[#2BB1D6] hover:bg-[#2BB1D6] hover:text-white transition-all duration-200"
                 >
                   {iconProps ? <Icon {...iconProps} /> : <Icon />}
                 </a>
               ))}
             </div>
             <div className="space-y-1">
-              <p className="text-light/50 text-sm">📍 Al Taawun Dist. Riyadh, KSA</p>
-              <a href="tel:+966539222742" className="text-accent hover:underline text-sm">
+              <p className="text-[#1A2836]/60 text-sm">📍 Al Taawun Dist. Riyadh, KSA</p>
+              <a href="tel:+966539222742" className="text-[#F25430] hover:underline text-sm">
                 📞 +966-53-922-2742
               </a>
             </div>
@@ -93,8 +114,8 @@ export default function Footer() {
         </div>
 
         <div className="pt-6 text-center">
-          <p className="text-light/30 text-sm">
-            © 2026 Pets Hero. All Rights Reserved.
+          <p className="text-[#1A2836]/40 text-sm flex items-center justify-center gap-2">
+            <span>🐾</span> © 2026 Pets Hero. All Rights Reserved. <span>🐾</span>
           </p>
         </div>
       </div>

@@ -1,13 +1,16 @@
 import { motion } from 'framer-motion';
-import { Scissors, ShoppingBag, Stethoscope, ChevronRight } from 'lucide-react';
+import { Scissors, ShoppingBag, Stethoscope, Heart } from 'lucide-react';
+import PawPrints from './PawPrints';
 
 const services = [
   {
     icon: Scissors,
+    emoji: '🐕',
     title: 'Service Providers',
     description:
       'Care for your pet, including grooming, boarding, sitting, training, and transportation — all available at your fingertips.',
     features: ['Grooming', 'Boarding', 'Sitting', 'Training', 'Transportation'],
+    featureEmojis: ['✂️', '🏠', '🤗', '🎓', '🚗'],
     iconBg: 'bg-primary/15',
     iconColor: 'text-primary',
     accentColor: 'border-primary/20 hover:border-primary/50',
@@ -15,10 +18,12 @@ const services = [
   },
   {
     icon: ShoppingBag,
+    emoji: '🐈',
     title: 'Product Vendors',
     description:
       "Premium pet products for all your pet's needs, with easy ordering and doorstep delivery.",
     features: ['Premium Quality', 'Easy Ordering', 'Fast Delivery', 'Wide Selection'],
+    featureEmojis: ['⭐', '📱', '🚀', '🛍️'],
     iconBg: 'bg-accent/15',
     iconColor: 'text-accent',
     accentColor: 'border-accent/20 hover:border-accent/40',
@@ -26,10 +31,12 @@ const services = [
   },
   {
     icon: Stethoscope,
+    emoji: '🐇',
     title: 'Doctors',
     description:
       'Expert online and onsite veterinary consultations to keep your pet healthy and well.',
     features: ['Online Consultations', 'Onsite Visits', 'Video Calls', 'Trusted Vets'],
+    featureEmojis: ['💻', '🏥', '📹', '👨‍⚕️'],
     iconBg: 'bg-dark/10',
     iconColor: 'text-dark',
     accentColor: 'border-dark/10 hover:border-dark/25',
@@ -49,6 +56,9 @@ const cardVariants = {
 export default function Services() {
   return (
     <section id="services" className="relative overflow-hidden bg-light py-24">
+      {/* Floating paw prints */}
+      <PawPrints count={4} />
+      
       <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -57,10 +67,10 @@ export default function Services() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <span className="mb-4 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-sm font-semibold tracking-wider text-primary uppercase">
-            Hero Pets Vendors
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-semibold tracking-wider text-primary uppercase">
+            <span>🐾</span> Hero Pets Vendors <span>🐾</span>
           </span>
-          <h2 className="mb-5 text-4xl font-bold text-dark sm:text-5xl">Our Services</h2>
+          <h2 className="mb-5 text-4xl font-bold text-dark sm:text-5xl">Our Services 🦴</h2>
           <p className="mx-auto max-w-xl text-lg text-dark/55">
             Connect with the best pet care professionals, products, and doctors — all in one platform.
           </p>
@@ -73,39 +83,52 @@ export default function Services() {
           viewport={{ once: true, margin: '-80px' }}
           className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7"
         >
-          {services.map(({ icon: Icon, title, description, features, iconBg, iconColor, accentColor, glowColor, featured }) => (
+          {services.map(({ icon: Icon, emoji, title, description, features, featureEmojis, iconBg, iconColor, accentColor, glowColor, featured }) => (
             <motion.div
               key={title}
               variants={cardVariants}
-              whileHover={{ y: -6 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              className={`group relative flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-lg sm:p-7 ${accentColor} ${glowColor || ''} ${
-                featured ? 'ring-1 ring-accent/20' : ''
+              whileHover={{ y: -8, scale: 1.02 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+              className={`group relative flex h-full flex-col rounded-2xl border bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-xl sm:p-7 ${accentColor} ${glowColor || ''} ${
+                featured ? 'ring-2 ring-accent/30' : ''
               }`}
             >
               {featured && (
-                <div className="absolute -top-3 right-5 rounded-full bg-gradient-to-r from-accent to-accent-light px-4 py-1 text-[11px] font-bold text-white shadow-md shadow-accent/20">
-                  Popular
-                </div>
+                <motion.div 
+                  className="absolute -top-3 right-5 rounded-full bg-gradient-to-r from-accent to-accent-light px-4 py-1 text-[11px] font-bold text-white shadow-md shadow-accent/20"
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  ⭐ Popular
+                </motion.div>
               )}
 
               {/* Shimmer overlay on hover */}
               <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100 shimmer" />
 
-              <div className={`mb-5 flex h-12 w-12 items-center justify-center rounded-xl ${iconBg}`}>
+              <div className={`mb-4 flex h-14 w-14 items-center justify-center rounded-2xl ${iconBg} transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
+                <span className="text-2xl mr-1">{emoji}</span>
                 <Icon size={24} className={iconColor} />
               </div>
 
-              <h3 className="mb-2 text-xl font-bold text-dark">{title}</h3>
+              <h3 className="mb-2 text-xl font-bold text-dark flex items-center gap-2">
+                {title}
+              </h3>
               <p className="mb-6 text-sm leading-relaxed text-dark/55">{description}</p>
 
               <div className="mt-auto">
                 <ul className="space-y-2.5">
-                  {features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2.5 text-sm text-dark/65">
-                      <ChevronRight size={14} className="shrink-0 text-accent" />
+                  {features.map((feature, i) => (
+                    <motion.li 
+                      key={feature} 
+                      className="flex items-center gap-2.5 text-sm text-dark/65"
+                      whileHover={{ x: 4 }}
+                      transition={{ type: 'spring', stiffness: 400 }}
+                    >
+                      <span className="text-xs">{featureEmojis[i]}</span>
+                      <Heart size={10} className="shrink-0 text-accent/60" fill="currentColor" />
                       {feature}
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
               </div>
