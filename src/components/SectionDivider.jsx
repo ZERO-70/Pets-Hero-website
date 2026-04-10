@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { memo } from 'react';
 
 const DIVIDER_PRESETS = {
   default: {
@@ -39,7 +39,7 @@ const DIVIDER_PRESETS = {
   },
 };
 
-export default function SectionDivider({ variant = 'default', fill, className = '' }) {
+export default memo(function SectionDivider({ variant = 'default', fill, className = '' }) {
   const preset = DIVIDER_PRESETS[variant] || DIVIDER_PRESETS.default;
   const dividerFill = fill || preset.fill;
 
@@ -48,20 +48,13 @@ export default function SectionDivider({ variant = 'default', fill, className = 
       aria-hidden="true"
       className={`pointer-events-none absolute inset-x-0 bottom-0 z-20 ${preset.heightClass} ${preset.opacityClass || ''} translate-y-[1px] overflow-hidden ${className}`}
     >
-      <motion.svg
+      <svg
         viewBox="0 0 1440 120"
         preserveAspectRatio="none"
-        className="h-full w-[120%]"
-        initial={{ x: '-10%' }}
-        animate={{ x: ['-10%', '-6%', '-10%'] }}
-        transition={{
-          duration: 9,
-          ease: 'easeInOut',
-          repeat: Infinity,
-        }}
+        className="h-full w-[120%] divider-sway"
       >
         <path fill={dividerFill} d={preset.path} />
-      </motion.svg>
+      </svg>
     </div>
   );
-}
+})

@@ -110,13 +110,9 @@ export default function MobileApps() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <motion.span 
-            className="inline-flex items-center gap-2 bg-[#F25430]/20 text-[#F25430] font-semibold text-sm px-4 py-1.5 rounded-full mb-4 tracking-wider uppercase"
-            animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
+          <span className="inline-flex items-center gap-2 bg-[#F25430]/20 text-[#F25430] font-semibold text-sm px-4 py-1.5 rounded-full mb-4 tracking-wider uppercase css-pulse-scale">
             <Sparkles size={14} /> Download Now <Sparkles size={14} />
-          </motion.span>
+          </span>
           <h2 className="theme-text-strong mb-5 text-4xl font-bold sm:text-5xl">
             📱 Our Mobile Apps 🐾
           </h2>
@@ -191,17 +187,14 @@ export default function MobileApps() {
               ))}
             </div>
 
-            <motion.div
-              className="flex justify-center"
-              animate={{ y: [0, -12, 0] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-            >
+            <div className="flex justify-center css-float-slow">
               <div className="relative">
                 <div className="absolute -inset-8 rounded-full bg-primary/20 blur-3xl" />
                 <div className="polaroid-app relative">
                   <img
                     src={currentTab.mockup}
                     alt={`${currentTab.label} mockup`}
+                    loading="lazy"
                     className="h-[320px] w-auto object-contain rounded-xl sm:h-[380px]"
                   />
                   <div className="theme-text-muted absolute bottom-3 left-0 right-0 text-center text-sm font-semibold">
@@ -209,7 +202,7 @@ export default function MobileApps() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             <div className="flex flex-col gap-4 items-center lg:items-start">
               <h3 className="theme-text-strong text-2xl font-bold">{currentTab.label}</h3>
@@ -244,25 +237,19 @@ export default function MobileApps() {
               <div className="flex items-center gap-2 mt-2">
                 <div className="flex -space-x-2">
                   {['🐕', '🐈', '🐇'].map((emoji, i) => (
-                    <motion.div
+                    <div
                       key={i}
-                      className="mobileapps-pet-chip flex h-8 w-8 items-center justify-center rounded-full border-2 text-sm"
-                      animate={{ y: [0, -4, 0] }}
-                      transition={{ duration: 1.5, delay: i * 0.2, repeat: Infinity }}
-                      whileHover={{ scale: 1.2, rotate: 10 }}
+                      className="mobileapps-pet-chip flex h-8 w-8 items-center justify-center rounded-full border-2 text-sm emoji-bounce hover:scale-120 hover:rotate-6 transition-transform"
+                      style={{ '--bounce-delay': `${i * 0.2}s` }}
                     >
                       {emoji}
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
-                <motion.span 
-                  className="theme-text-muted flex items-center gap-1 text-xs"
-                  animate={{ opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
+                <span className="theme-text-muted flex items-center gap-1 text-xs css-pulse-opacity">
                   <Heart size={10} className="text-[#F25430]" fill="currentColor" />
                   Thousands of happy pets
-                </motion.span>
+                </span>
               </div>
             </div>
           </motion.div>

@@ -64,6 +64,7 @@ export default function Ceo() {
                     <img
                       src="/assets/ceo-real.jpg"
                       alt="Mr. Yazeed - CEO & Founder"
+                      loading="lazy"
                       className="aspect-square object-cover"
                     />
                   </div>
@@ -122,34 +123,17 @@ export default function Ceo() {
               </div>
               <div className="flex flex-wrap gap-2">
                 {ventures.map(({ name, emoji }, i) => (
-                  <motion.span
+                  <span
                     key={name}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    animate={name === 'Pets Hero' ? {
-                      rotate: [0, -3, 3, -2, 2, 0],
-                      scale: [1, 1.05, 0.98, 1.02, 1],
-                    } : undefined}
-                    {...(name === 'Pets Hero' ? {
-                      transition: {
-                        duration: 0.6,
-                        repeat: Infinity,
-                        repeatDelay: 1.5,
-                        ease: 'easeInOut',
-                      }
-                    } : {})}
-                    className={`inline-flex items-center gap-1 rounded-full border px-3.5 py-1.5 text-sm cursor-pointer transition-colors duration-200 ${
+                    className={`inline-flex items-center gap-1 rounded-full border px-3.5 py-1.5 text-sm cursor-pointer transition-all duration-200 hover:scale-110 hover:-translate-y-0.5 ${
                       name === 'Pets Hero'
-                        ? 'border-[#F25430]/30 bg-gradient-to-r from-[#F25430]/20 to-[#FF7A5C]/20 text-[#F25430] font-semibold shadow-sm shadow-[#F25430]/20'
+                        ? 'border-[#F25430]/30 bg-gradient-to-r from-[#F25430]/20 to-[#FF7A5C]/20 text-[#F25430] font-semibold shadow-sm shadow-[#F25430]/20 css-wiggle'
                         : 'border-[#2BB1D6]/10 bg-[#2BB1D6]/5 theme-text-muted hover:border-[#2BB1D6]/30 hover:text-[#2BB1D6]'
                     }`}
                   >
                     <span>{emoji}</span>
                     {name}
-                  </motion.span>
+                  </span>
                 ))}
               </div>
             </div>

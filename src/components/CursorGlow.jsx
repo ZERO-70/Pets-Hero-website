@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 
 const PIXEL_PETS = {
   cat: [
@@ -68,15 +68,40 @@ const PET_COLORS = {
   dog: { B: '#1A2836', C: '#E8C39E', D: '#C98E52', E: '#2BB1D6', P: '#F6B36B' },
 };
 
+// Pre-render all sprites to static SVG markup strings for direct DOM injection
+function buildSpriteMarkup(petType, frameIndex) {
+  const sprite = PIXEL_PETS[petType][frameIndex];
+  const palette = PET_COLORS[petType];
+  const parts = [];
+  for (let y = 0; y < sprite.length; y++) {
+    for (let x = 0; x < sprite[y].length; x++) {
+      const code = sprite[y][x];
+      if (code !== '.') {
+        parts.push(`<rect x="${x}" y="${y}" width="1" height="1" fill="${palette[code] ?? '#1A2836'}"/>`);
+      }
+    }
+  }
+  return parts.join('');
+}
+
+// Pre-build all 4 sprite variants (2 pets × 2 frames) at module level
+const SPRITE_CACHE = {};
+['cat', 'dog'].forEach(pet => {
+  [0, 1].forEach(frame => {
+    SPRITE_CACHE[`${pet}-${frame}`] = buildSpriteMarkup(pet, frame);
+  });
+});
+
 export default function CursorGlow() {
   const [enabled, setEnabled] = useState(false);
-  const [petType, setPetType] = useState('cat');
-  const [frameIndex, setFrameIndex] = useState(0);
   const petRef = useRef(null);
+  const svgRef = useRef(null);
   const targetRef = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
   const currentRef = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
   const facingRef = useRef(1);
   const lastFrameSwitchRef = useRef(0);
+  const petTypeRef = useRef('cat');
+  const frameIndexRef = useRef(0);
 
   useEffect(() => {
     const media = window.matchMedia('(pointer: fine)');
@@ -85,6 +110,14 @@ export default function CursorGlow() {
 
     media.addEventListener('change', update);
     return () => media.removeEventListener('change', update);
+  }, []);
+
+  // Update SVG content directly via DOM — no React re-render
+  const updateSprite = useCallback(() => {
+    if (svgRef.current) {
+      const key = `${petTypeRef.current}-${frameIndexRef.current}`;
+      svgRef.current.innerHTML = SPRITE_CACHE[key];
+    }
   }, []);
 
   useEffect(() => {
@@ -103,10 +136,16 @@ export default function CursorGlow() {
       const dy = target.y - current.y;
       const distance = Math.hypot(dx, dy);
 
-      const chaseStrength = Math.max(0.08, Math.min(0.24, distance / 220));
+      // Cap movement per frame so the pet runs at a believable max speed
+      const chaseStrength = Math.max(0.04, Math.min(0.1, distance / 400));
+      const maxStep = 5; // pixels per frame cap
+      const stepX = dx * chaseStrength;
+      const stepY = dy * chaseStrength;
+      const stepDist = Math.hypot(stepX, stepY);
+      const clamp = stepDist > maxStep ? maxStep / stepDist : 1;
 
-      current.x += dx * chaseStrength;
-      current.y += dy * chaseStrength;
+      current.x += stepX * clamp;
+      current.y += stepY * clamp;
       currentRef.current = current;
 
       if (Math.abs(dx) > 1.5) {
@@ -117,8 +156,9 @@ export default function CursorGlow() {
         distance > 140 ? 70 : distance > 90 ? 95 : distance > 45 ? 130 : 240;
 
       if (now - lastFrameSwitchRef.current > runInterval) {
-        setFrameIndex((prev) => (prev + 1) % 2);
+        frameIndexRef.current = (frameIndexRef.current + 1) % 2;
         lastFrameSwitchRef.current = now;
+        updateSprite();
       }
 
       const moving = distance > 18;
@@ -145,36 +185,23 @@ export default function CursorGlow() {
       window.removeEventListener('mousemove', onMove);
       cancelAnimationFrame(rafId);
     };
-  }, [enabled]);
+  }, [enabled, updateSprite]);
 
   useEffect(() => {
     if (!enabled) return;
 
+    // Initial sprite render
+    updateSprite();
+
     const speciesTimer = setInterval(() => {
-      setPetType((prev) => (prev === 'cat' ? 'dog' : 'cat'));
+      petTypeRef.current = petTypeRef.current === 'cat' ? 'dog' : 'cat';
+      updateSprite();
     }, 7000);
 
     return () => {
       clearInterval(speciesTimer);
     };
-  }, [enabled]);
-
-  const pixels = useMemo(() => {
-    const sprite = PIXEL_PETS[petType][frameIndex];
-    const palette = PET_COLORS[petType];
-    const rects = [];
-
-    for (let y = 0; y < sprite.length; y += 1) {
-      for (let x = 0; x < sprite[y].length; x += 1) {
-        const code = sprite[y][x];
-        if (code !== '.') {
-          rects.push({ x, y, color: palette[code] ?? '#1A2836' });
-        }
-      }
-    }
-
-    return rects;
-  }, [petType, frameIndex]);
+  }, [enabled, updateSprite]);
 
   if (!enabled) return null;
 
@@ -191,15 +218,12 @@ export default function CursorGlow() {
       aria-hidden="true"
     >
       <svg
+        ref={svgRef}
         viewBox="0 0 12 12"
         width="48"
         height="48"
         style={{ imageRendering: 'pixelated' }}
-      >
-        {pixels.map((px) => (
-          <rect key={`${px.x}-${px.y}`} x={px.x} y={px.y} width="1" height="1" fill={px.color} />
-        ))}
-      </svg>
+      />
     </div>
   );
 }

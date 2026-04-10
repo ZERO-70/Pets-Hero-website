@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { memo } from 'react';
 
 const pawPositions = [
   { left: '5%', top: '20%', delay: 0, rotate: 15 },
@@ -11,35 +11,23 @@ const pawPositions = [
   { left: '60%', top: '85%', delay: 3.5, rotate: -30 },
 ];
 
-// Use emoji paw for perfect shape
-const PawIcon = ({ className }) => (
-  <span className={className}>🐾</span>
-);
-
-export default function PawPrints({ count = 6 }) {
+export default memo(function PawPrints({ count = 6 }) {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
       {pawPositions.slice(0, count).map((pos, i) => (
-        <motion.div
+        <div
           key={i}
-          className="absolute"
-          style={{ left: pos.left, top: pos.top }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{
-            opacity: [0.1, 0.3, 0.1],
-            y: [0, -15, 0],
-            rotate: [pos.rotate, pos.rotate + 5, pos.rotate],
-          }}
-          transition={{
-            duration: 4,
-            delay: pos.delay,
-            repeat: Infinity,
-            ease: 'easeInOut',
+          className="absolute paw-float"
+          style={{
+            left: pos.left,
+            top: pos.top,
+            '--paw-rotate': `${pos.rotate}deg`,
+            '--paw-delay': `${pos.delay}s`,
           }}
         >
-          <PawIcon className="floating-paw text-6xl opacity-70" />
-        </motion.div>
+          <span className="floating-paw text-6xl opacity-70">🐾</span>
+        </div>
       ))}
     </div>
   );
-}
+})

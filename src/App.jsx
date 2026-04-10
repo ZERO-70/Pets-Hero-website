@@ -1,12 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import CursorGlow from './components/CursorGlow'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-import Services from './components/Services'
-import MobileApps from './components/MobileApps'
-import Ceo from './components/Ceo'
-import FindUs from './components/FindUs'
-import Footer from './components/Footer'
+
+const Services = lazy(() => import('./components/Services'))
+const MobileApps = lazy(() => import('./components/MobileApps'))
+const Ceo = lazy(() => import('./components/Ceo'))
+const FindUs = lazy(() => import('./components/FindUs'))
+const Footer = lazy(() => import('./components/Footer'))
 
 const THEME_KEY = 'pets-hero-theme'
 
@@ -62,11 +63,13 @@ function App() {
       <CursorGlow />
       <Navbar theme={theme} onToggleTheme={handleToggleTheme} />
       <Hero />
-      <Services />
-      <MobileApps />
-      <Ceo />
-      <FindUs />
-      <Footer />
+      <Suspense fallback={null}>
+        <Services />
+        <MobileApps />
+        <Ceo />
+        <FindUs />
+        <Footer />
+      </Suspense>
     </div>
   )
 }

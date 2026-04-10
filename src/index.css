@@ -674,4 +674,112 @@ html.theme-dark {
     border-bottom: 18px solid rgba(255, 255, 255, 0.4);
     transform: rotate(15deg);
   }
+
+  /* ===== Performance: CSS replacements for framer-motion infinite animations ===== */
+
+  /* Emoji bounce (navbar/footer animals, pet chips) */
+  .emoji-bounce {
+    display: inline-block;
+    animation: emoji-bounce 2s ease-in-out infinite;
+    animation-delay: var(--bounce-delay, 0s);
+    will-change: transform;
+  }
+
+  @keyframes emoji-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* Paw float (PawPrints component) */
+  .paw-float {
+    animation: paw-float 4s ease-in-out infinite;
+    animation-delay: var(--paw-delay, 0s);
+    will-change: transform, opacity;
+  }
+
+  @keyframes paw-float {
+    0%, 100% {
+      opacity: 0.1;
+      transform: translateY(0) rotate(var(--paw-rotate, 0deg));
+    }
+    50% {
+      opacity: 0.3;
+      transform: translateY(-15px) rotate(calc(var(--paw-rotate, 0deg) + 5deg));
+    }
+  }
+
+  /* Paw trail pulse (AnimatedPawTrail) */
+  .paw-trail-pulse {
+    animation: paw-trail-pulse 5s ease-in-out infinite;
+    animation-delay: var(--trail-delay, 0s);
+    will-change: transform, opacity;
+  }
+
+  @keyframes paw-trail-pulse {
+    0%, 100% { opacity: 0; transform: scale(0.6); }
+    50% { opacity: 0.6; transform: scale(1.2); }
+  }
+
+  /* Divider sway (SectionDivider) */
+  .divider-sway {
+    animation: divider-sway 9s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  @keyframes divider-sway {
+    0%, 100% { transform: translateX(-10%); }
+    50% { transform: translateX(-6%); }
+  }
+
+  /* Pulse scale (Download Now badge) */
+  .css-pulse-scale {
+    animation: css-pulse-scale 2s ease-in-out infinite;
+  }
+
+  @keyframes css-pulse-scale {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  /* Float slow (phone mockup) */
+  .css-float-slow {
+    animation: css-float-slow 3.5s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  @keyframes css-float-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  /* Pulse opacity (happy pets text) */
+  .css-pulse-opacity {
+    animation: css-pulse-opacity 2s ease-in-out infinite;
+  }
+
+  @keyframes css-pulse-opacity {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  /* Wiggle (Pets Hero badge in CEO section) */
+  .css-wiggle {
+    animation: css-wiggle 2.1s ease-in-out infinite;
+  }
+
+  @keyframes css-wiggle {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    15% { transform: rotate(-3deg) scale(1.05); }
+    30% { transform: rotate(3deg) scale(0.98); }
+    45% { transform: rotate(-2deg) scale(1.02); }
+    60% { transform: rotate(2deg) scale(1); }
+    75%, 100% { transform: rotate(0deg) scale(1); }
+  }
+
+  /* ===== GPU hints for heavy animated elements ===== */
+  .gradient-orb,
+  .hero-wave {
+    will-change: transform;
+    contain: layout style paint;
+  }
 }

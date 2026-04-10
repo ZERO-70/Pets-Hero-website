@@ -1,6 +1,5 @@
 import { Link } from 'react-scroll';
 import { Phone } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 const TikTokIcon = () => (
   <svg viewBox="0 0 448 512" fill="currentColor" className="w-4 h-4">
@@ -41,14 +40,13 @@ export default function Footer() {
       <div className="absolute bottom-0 left-0 right-0 overflow-hidden pointer-events-none opacity-10">
         <div className="flex justify-center gap-8 pb-4">
           {['🐾', '🐕', '🐈', '🐇', '🐾'].map((emoji, i) => (
-            <motion.span
+            <span
               key={i}
-              className="text-2xl"
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 2, delay: i * 0.2, repeat: Infinity }}
+              className="text-2xl emoji-bounce"
+              style={{ '--bounce-delay': `${i * 0.2}s` }}
             >
               {emoji}
-            </motion.span>
+            </span>
           ))}
         </div>
       </div>

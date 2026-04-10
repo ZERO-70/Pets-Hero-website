@@ -206,14 +206,13 @@ export default function Navbar({ theme, onToggleTheme }) {
       <div className="absolute -bottom-2 left-0 right-0 overflow-hidden pointer-events-none opacity-15">
         <div className="flex justify-center gap-8">
           {['🐾', '🐕', '🐈', '🐇', '🐾'].map((emoji, i) => (
-            <motion.span
+            <span
               key={i}
-              className="text-7xl"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 2, delay: i * 0.2, repeat: Infinity }}
+              className="text-7xl emoji-bounce"
+              style={{ '--bounce-delay': `${i * 0.2}s` }}
             >
               {emoji}
-            </motion.span>
+            </span>
           ))}
         </div>
       </div>
