@@ -51,6 +51,19 @@ export default function Footer() {
         </div>
       </div>
       
+      {/* Pixelated moons - dark mode only */}
+      <div className="pointer-events-none absolute top-10 right-10 lg:top-16 lg:right-20">
+        <div className="pixel-moon moon-float-medium relative" style={{ transform: 'scale(0.6)' }}>
+          <div className="pixel-moon-glow absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2" style={{ transform: 'scale(0.6)' }} />
+        </div>
+        <div className="absolute top-4 left-4 pixel-star" style={{ animationDelay: '0.4s' }} />
+      </div>
+      <div className="pointer-events-none absolute top-20 left-8 lg:top-24 lg:left-16">
+        <div className="pixel-moon moon-float-slow relative" style={{ transform: 'scale(0.4)' }}>
+          <div className="pixel-moon-glow absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2" style={{ transform: 'scale(0.4)' }} />
+        </div>
+      </div>
+      
       <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-[#2BB1D6]/10">
           <div>

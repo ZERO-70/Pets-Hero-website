@@ -28,6 +28,20 @@ export default function Ceo() {
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-32 -right-32 h-[400px] w-[400px] rounded-full bg-[#2BB1D6]/15 blur-[120px]" />
         <div className="absolute -bottom-24 -left-24 h-[300px] w-[300px] rounded-full bg-[#F25430]/10 blur-[100px]" />
+        
+        {/* Pixelated moons - dark mode only */}
+        <div className="absolute top-20 right-16 lg:top-24 lg:right-32">
+          <div className="pixel-moon moon-float-slow relative" style={{ transform: 'scale(0.8)' }}>
+            <div className="pixel-moon-glow absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2" style={{ transform: 'scale(0.8)' }} />
+          </div>
+          <div className="absolute top-4 left-8 pixel-star" style={{ animationDelay: '0.6s' }} />
+          <div className="absolute -top-2 left-4 pixel-star" style={{ animationDelay: '1.5s' }} />
+        </div>
+        <div className="absolute bottom-32 right-20 lg:bottom-40 lg:right-40">
+          <div className="pixel-moon moon-float-medium relative" style={{ transform: 'scale(0.5)' }}>
+            <div className="pixel-moon-glow absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2" style={{ transform: 'scale(0.5)' }} />
+          </div>
+        </div>
       </div>
 
       <div className="relative z-10 mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">

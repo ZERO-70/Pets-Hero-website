@@ -60,6 +60,21 @@ export default function Hero() {
         <div className="absolute -top-32 -left-32 h-[600px] w-[600px] rounded-full gradient-orb blur-[100px]" />
         <div className="absolute -bottom-40 -right-40 h-[500px] w-[500px] rounded-full bg-[#2BB1D6]/25 blur-[100px]" />
         <div className="absolute top-1/2 left-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2BB1D6]/20 blur-[120px]" />
+        
+        {/* Pixelated moons - dark mode only */}
+        <div className="absolute top-20 right-10 lg:top-24 lg:right-20">
+          <div className="pixel-moon moon-float-slow relative">
+            <div className="pixel-moon-glow absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2" />
+          </div>
+          <div className="absolute top-8 left-4 pixel-star" style={{ animationDelay: '0.5s' }} />
+          <div className="absolute -top-2 left-8 pixel-star" style={{ animationDelay: '1.2s' }} />
+        </div>
+        <div className="absolute bottom-32 left-8 lg:bottom-40 lg:left-16">
+          <div className="pixel-moon moon-float-medium relative" style={{ transform: 'scale(0.7)' }}>
+            <div className="pixel-moon-glow absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2" style={{ transform: 'scale(0.7)' }} />
+          </div>
+          <div className="absolute top-4 left-6 pixel-star" style={{ animationDelay: '0.8s' }} />
+        </div>
       </div>
 
       {/* Animated paw trail - goes around the hero */}

@@ -798,4 +798,112 @@ html.theme-dark {
       filter: drop-shadow(0 6px 20px rgba(43, 177, 214, 0.5));
     }
   }
+
+  /* ===== Pixelated Crescent Moons (Dark Mode Only) ===== */
+  
+  /* Base pixelated moon using box-shadow technique */
+  .pixel-moon {
+    width: 4px;
+    height: 4px;
+    background: transparent;
+    box-shadow: 
+      /* Crescent shape - 12x12 grid */
+      8px 0px 0 0 #FFE66D,
+      12px 0px 0 0 #FFE66D,
+      16px 4px 0 0 #FFE66D,
+      16px 8px 0 0 #FFE66D,
+      16px 12px 0 0 #FFE66D,
+      12px 16px 0 0 #FFE66D,
+      8px 16px 0 0 #FFE66D,
+      /* Glow pixels (softer yellow) */
+      4px 4px 0 0 #FFF3A0,
+      20px 4px 0 0 #FFF3A0,
+      20px 12px 0 0 #FFF3A0,
+      4px 12px 0 0 #FFF3A0,
+      /* Outer glow (cyan tinted) */
+      0px 8px 0 0 #2BB1D6,
+      24px 8px 0 0 #2BB1D6,
+      8px -4px 0 0 #2BB1D6,
+      12px -4px 0 0 #2BB1D6,
+      8px 20px 0 0 #2BB1D6,
+      12px 20px 0 0 #2BB1D6;
+    image-rendering: pixelated;
+    will-change: transform, opacity;
+  }
+
+  /* Only show moons in dark mode */
+  html:not(.theme-dark) .pixel-moon,
+  html:not(.theme-dark) .pixel-moon-glow {
+    display: none !important;
+  }
+
+  /* Moon glow effect */
+  .pixel-moon-glow {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #FFE66D;
+    border-radius: 0;
+    box-shadow: 
+      0 0 20px 10px rgba(255, 230, 109, 0.4),
+      0 0 40px 20px rgba(43, 177, 214, 0.2);
+    opacity: 0.6;
+    animation: moon-pulse 4s ease-in-out infinite;
+    image-rendering: pixelated;
+  }
+
+  @keyframes moon-pulse {
+    0%, 100% { 
+      opacity: 0.4;
+      transform: scale(1);
+    }
+    50% { 
+      opacity: 0.8;
+      transform: scale(1.1);
+    }
+  }
+
+  /* Floating moon animation variants */
+  .moon-float-slow {
+    animation: moon-float-slow 8s ease-in-out infinite;
+  }
+
+  .moon-float-medium {
+    animation: moon-float-medium 6s ease-in-out infinite;
+  }
+
+  .moon-float-fast {
+    animation: moon-float-fast 4s ease-in-out infinite;
+  }
+
+  @keyframes moon-float-slow {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-15px) rotate(2deg); }
+    50% { transform: translateY(-8px) rotate(-1deg); }
+    75% { transform: translateY(-20px) rotate(1deg); }
+  }
+
+  @keyframes moon-float-medium {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(-3deg); }
+  }
+
+  @keyframes moon-float-fast {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(2deg); }
+  }
+
+  /* Twinkle effect for small stars near moons */
+  .pixel-star {
+    width: 4px;
+    height: 4px;
+    background: #FFF;
+    box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.8);
+    animation: star-twinkle 2s ease-in-out infinite;
+  }
+
+  @keyframes star-twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1); }
+  }
 }

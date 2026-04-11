@@ -165,6 +165,13 @@ export default function Navbar({ theme, onToggleTheme }) {
         </div>
 
         <div className="hidden md:flex items-center gap-2.5 lg:gap-3">
+          {/* Small pixelated moon - dark mode only */}
+          <div className="relative mr-1">
+            <div className="pixel-moon moon-float-fast" style={{ transform: 'scale(0.4)' }}>
+              <div className="pixel-moon-glow absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2" style={{ transform: 'scale(0.4)' }} />
+            </div>
+          </div>
+          
           <button
             type="button"
             onClick={onToggleTheme}

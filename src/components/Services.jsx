@@ -56,9 +56,22 @@ const cardVariants = {
 
 export default function Services() {
   return (
-    <section id="services" className="relative overflow-hidden bg-light py-24">
+    <section id="services" className="services-theme-bg relative py-24">
       {/* Floating paw prints */}
       <PawPrints count={4} />
+      
+      {/* Pixelated moons - dark mode only */}
+      <div className="pointer-events-none absolute top-16 right-12 lg:top-20 lg:right-24">
+        <div className="pixel-moon moon-float-medium relative">
+          <div className="pixel-moon-glow absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2" />
+        </div>
+        <div className="absolute top-6 left-6 pixel-star" style={{ animationDelay: '0.3s' }} />
+      </div>
+      <div className="pointer-events-none absolute bottom-40 left-10 lg:bottom-48 lg:left-20">
+        <div className="pixel-moon moon-float-slow relative" style={{ transform: 'scale(0.6)' }}>
+          <div className="pixel-moon-glow absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2" style={{ transform: 'scale(0.6)' }} />
+        </div>
+      </div>
       
       <div className="relative z-10 mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
         <motion.div
