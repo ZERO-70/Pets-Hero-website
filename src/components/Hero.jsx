@@ -119,35 +119,26 @@ export default function Hero() {
               animate={{
                 opacity: 1,
                 scale: 1,
-                rotate: [0, -2, 2, -1, 1, 0],
               }}
               transition={{
                 delay: 0.1,
-                rotate: {
-                  duration: 0.6,
-                  repeat: Infinity,
-                  repeatDelay: 2,
-                  ease: 'easeInOut',
-                },
               }}
               whileHover={{
                 scale: 1.08,
-                rotate: [0, -5, 5, -3, 3, 0],
                 transition: { duration: 0.4 },
               }}
-              className="relative mb-6 inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#2BB1D6]/25 via-[#1E94B3]/20 to-[#F25430]/20 px-5 py-2.5 backdrop-blur-sm ring-2 ring-[#2BB1D6]/35 shadow-lg shadow-[#2BB1D6]/20 cursor-pointer"
+              className="relative mb-6 inline-flex items-center justify-center cursor-pointer"
             >
-              {/* Pulsing ring animation - solid primary color */}
-              <span className="absolute inset-0 rounded-full ring-2 ring-[#2BB1D6]/50 animate-ping opacity-40" />
-              <span className="absolute -inset-1 rounded-full ring-1 ring-[#2BB1D6]/30 animate-pulse" />
+              {/* Pulsing ring animation behind the logo */}
+              <span className="absolute inset-0 rounded-full bg-[#2BB1D6]/20 animate-ping opacity-40" />
+              <span className="absolute -inset-2 rounded-full bg-[#2BB1D6]/15 animate-pulse" />
+              <span className="absolute -inset-4 rounded-full ring-2 ring-[#2BB1D6]/20 animate-ping opacity-30" />
 
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#F25430] opacity-75" />
-                <span className="relative inline-flex h-full w-full rounded-full bg-[#F25430]" />
-              </span>
-              <span className="theme-text-strong text-cute-bold relative text-sm tracking-[0.16em] uppercase">
-                Pets Hero
-              </span>
+              <img 
+                src="/assets/logo.png" 
+                alt="Pets Hero Logo" 
+                className="relative h-20 w-auto object-contain drop-shadow-lg sm:h-24 lg:h-28 css-logo-pulse"
+              />
             </motion.div>
 
             <h1 className="mb-6 min-h-[3em] text-4xl font-extrabold leading-[1.15] text-dark sm:text-5xl xl:text-6xl">

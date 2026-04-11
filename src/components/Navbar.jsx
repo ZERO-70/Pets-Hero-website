@@ -125,7 +125,16 @@ export default function Navbar({ theme, onToggleTheme }) {
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-2.5 sm:px-10 lg:px-12 lg:py-3">
         <Link to="hero" smooth duration={500} className="cursor-pointer flex items-center gap-3">
-          <img src="/assets/logo.png" alt="Pets Hero Logo" className="h-10 w-auto object-contain sm:h-11 lg:h-12" />
+          <div className="relative inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#2BB1D6]/90 via-[#1E94B3]/85 to-[#F25430]/90 px-3 py-1.5 backdrop-blur-sm ring-2 ring-white/30 shadow-lg">
+            <span className="absolute inset-0 rounded-full ring-2 ring-white/40 animate-ping opacity-20" />
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
+              <span className="relative inline-flex h-full w-full rounded-full bg-white" />
+            </span>
+            <span className="relative text-xs font-bold tracking-[0.12em] uppercase text-white">
+              Pets Hero
+            </span>
+          </div>
         </Link>
 
         <div className="hidden md:flex items-center gap-1 lg:gap-2 relative">

@@ -782,4 +782,20 @@ html.theme-dark {
     will-change: transform;
     contain: layout style paint;
   }
+
+  /* Logo subtle pulse animation */
+  .css-logo-pulse {
+    animation: logo-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes logo-pulse {
+    0%, 100% { 
+      transform: scale(1);
+      filter: drop-shadow(0 4px 12px rgba(43, 177, 214, 0.3));
+    }
+    50% { 
+      transform: scale(1.03);
+      filter: drop-shadow(0 6px 20px rgba(43, 177, 214, 0.5));
+    }
+  }
 }
