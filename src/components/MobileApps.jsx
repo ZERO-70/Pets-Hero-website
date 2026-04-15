@@ -24,6 +24,7 @@ const tabs = [
     id: 'customer',
     label: 'Customer App',
     playLink: 'https://play.google.com/store/apps/details?id=com.petshero.customer',
+    appStoreLink: 'https://apps.apple.com/us/app/pets-hero/id6740918153',
     mockup: '/assets/customer-app-new.png',
     features: [
       {
@@ -50,6 +51,7 @@ const tabs = [
     id: 'vendor',
     label: 'Vendor App',
     playLink: 'https://play.google.com/store/apps/details?id=com.petshero.vendor',
+    appStoreLink: 'https://apps.apple.com/us/app/pets-hero-pro/id6740934646',
     mockup: '/assets/vendor-app.png',
     features: [
       {
@@ -224,7 +226,10 @@ export default function MobileApps() {
                   <AndroidIcon />
                   Google Play
                 </motion.a>
-                <motion.button 
+                <motion.a
+                  href={currentTab.appStoreLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="theme-text-strong flex items-center gap-2 rounded-full border border-[#2BB1D6]/20 bg-white px-5 py-3 text-sm font-semibold hover:bg-[#2BB1D6]/10"
                   whileHover={{ scale: 1.08, y: -2 }}
                   whileTap={{ scale: 0.95 }}
@@ -232,7 +237,7 @@ export default function MobileApps() {
                 >
                   <AppleIcon />
                   App Store
-                </motion.button>
+                </motion.a>
               </div>
               <div className="flex items-center gap-2 mt-2">
                 <div className="flex -space-x-2">
