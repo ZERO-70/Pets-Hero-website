@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- NOTE: Update domain to custom domain when it goes live -->
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+>
+  <!-- Homepage (primary) -->
+  <url>
+    <loc>https://pets-hero-react.vercel.app/</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <!-- hreflang alternates for bilingual targeting -->
+    <xhtml:link rel="alternate" hreflang="en-SA" href="https://pets-hero-react.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="ar-SA" href="https://pets-hero-react.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pets-hero-react.vercel.app/" />
+  </url>
+</urlset>

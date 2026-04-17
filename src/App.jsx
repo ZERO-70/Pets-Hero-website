@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import CursorGlow from './components/CursorGlow'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
+import SEO from './components/SEO'
 
 const Services = lazy(() => import('./components/Services'))
 const MobileApps = lazy(() => import('./components/MobileApps'))
@@ -60,14 +61,25 @@ function App() {
 
   return (
     <div className="overflow-x-hidden">
+      {/* Inject all JSON-LD structured data schemas into <head> */}
+      <SEO />
+
       <CursorGlow />
       <Navbar theme={theme} onToggleTheme={handleToggleTheme} />
-      <Hero />
+
+      {/* Semantic <main> landmark — important for accessibility and SEO */}
+      <main id="main-content" aria-label="Pets Hero main content">
+        <Hero />
+        <Suspense fallback={null}>
+          <Services />
+          <MobileApps />
+          <Ceo />
+          <FindUs />
+        </Suspense>
+      </main>
+
+      {/* Footer is outside <main> per HTML5 landmark best practices */}
       <Suspense fallback={null}>
-        <Services />
-        <MobileApps />
-        <Ceo />
-        <FindUs />
         <Footer />
       </Suspense>
     </div>

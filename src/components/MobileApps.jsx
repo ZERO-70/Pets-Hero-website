@@ -195,7 +195,7 @@ export default function MobileApps() {
                 <div className="polaroid-app relative">
                   <img
                     src={currentTab.mockup}
-                    alt={`${currentTab.label} mockup`}
+                    alt={`${currentTab.label} screenshot — Pets Hero pet care app for Saudi Arabia`}
                     loading="lazy"
                     className="h-[320px] w-auto object-contain rounded-xl sm:h-[380px]"
                   />
@@ -218,6 +218,7 @@ export default function MobileApps() {
                   href={currentTab.playLink}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`Download ${currentTab.label} on Google Play`}
                   className="flex items-center gap-2 bg-[#F25430] hover:bg-[#F25430]/90 text-white font-semibold px-5 py-3 rounded-full text-sm"
                   whileHover={{ scale: 1.08, y: -2 }}
                   whileTap={{ scale: 0.95 }}
@@ -230,6 +231,7 @@ export default function MobileApps() {
                   href={currentTab.appStoreLink}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`Download ${currentTab.label} on the App Store`}
                   className="theme-text-strong flex items-center gap-2 rounded-full border border-[#2BB1D6]/20 bg-white px-5 py-3 text-sm font-semibold hover:bg-[#2BB1D6]/10"
                   whileHover={{ scale: 1.08, y: -2 }}
                   whileTap={{ scale: 0.95 }}

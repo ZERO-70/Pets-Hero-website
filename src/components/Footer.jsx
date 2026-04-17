@@ -77,9 +77,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h5 className="theme-text-strong mb-4 flex items-center gap-2 font-semibold">
+            <h3 className="theme-text-strong mb-4 flex items-center gap-2 font-semibold">
               Quick Links <span>🦴</span>
-            </h5>
+            </h3>
             <ul className="space-y-2.5">
               {navLinks.map(({ label, to }) => (
                 <li key={label}>
@@ -98,9 +98,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h5 className="theme-text-strong mb-4 flex items-center gap-2 font-semibold">
+            <h3 className="theme-text-strong mb-4 flex items-center gap-2 font-semibold">
               Connect With Us <span>❤️</span>
-            </h5>
+            </h3>
             <div className="flex items-center gap-3 mb-6">
               {socialLinks.map(({ href, Icon, label, iconProps }) => (
                 <a

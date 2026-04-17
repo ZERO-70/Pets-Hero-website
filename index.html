@@ -2,15 +2,185 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/assets/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Pets Hero — Your partner for complete pet care in Saudi Arabia. Find vets, groomers, and premium products." />
+
+    <!-- ============================================================
+         CANONICAL & LANGUAGE
+         NOTE: Update SITE_URL when custom domain is live.
+         ============================================================ -->
+    <link rel="canonical" href="https://pets-hero-react.vercel.app/" />
+
+    <!-- hreflang: English (Saudi Arabia) + Arabic (Saudi Arabia) -->
+    <link rel="alternate" hreflang="en-SA" href="https://pets-hero-react.vercel.app/" />
+    <link rel="alternate" hreflang="ar-SA" href="https://pets-hero-react.vercel.app/" />
+    <link rel="alternate" hreflang="x-default" href="https://pets-hero-react.vercel.app/" />
+
+    <!-- ============================================================
+         PRIMARY META TAGS
+         ============================================================ -->
+    <title>Pets Hero | Pet Care Services, Vets & Products in Saudi Arabia</title>
+    <meta name="title" content="Pets Hero | Pet Care Services, Vets & Products in Saudi Arabia" />
+    <meta
+      name="description"
+      content="Pets Hero is Saudi Arabia's #1 pet care platform. Find expert vets, professional groomers, premium pet products, and trusted service providers — all in one app. Available in Riyadh, KSA."
+    />
+    <meta
+      name="keywords"
+      content="pet care Saudi Arabia, vets Riyadh, pet grooming Riyadh, pet products KSA, pets hero app, dog grooming, cat care, veterinary consultation, pet services Saudi Arabia, بيتس هيرو, رعاية الحيوانات الأليفة, بيطري الرياض, تزيين الحيوانات الأليفة, منتجات الحيوانات الأليفة"
+    />
+    <meta name="author" content="Pets Hero" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="theme-color" content="#2BB1D6" />
+    <meta name="msapplication-TileColor" content="#2BB1D6" />
+
+    <!-- Geo tags for Saudi Arabia local SEO -->
+    <meta name="geo.region" content="SA-01" />
+    <meta name="geo.placename" content="Riyadh, Saudi Arabia" />
+    <meta name="geo.position" content="24.767361;46.691944" />
+    <meta name="ICBM" content="24.767361, 46.691944" />
+
+    <!-- ============================================================
+         OPEN GRAPH (Facebook, WhatsApp, LinkedIn, etc.)
+         ============================================================ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Pets Hero" />
+    <meta property="og:url" content="https://pets-hero-react.vercel.app/" />
+    <meta property="og:title" content="Pets Hero | Pet Care Services, Vets & Products in Saudi Arabia" />
+    <meta
+      property="og:description"
+      content="Saudi Arabia's #1 pet care platform. Find expert vets, professional groomers, premium pet products, and trusted service providers — all in one app. Available in Riyadh, KSA."
+    />
+    <meta property="og:image" content="https://pets-hero-react.vercel.app/assets/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Pets Hero — Your Partner for Complete Pet Care in Saudi Arabia" />
+    <meta property="og:locale" content="en_SA" />
+    <meta property="og:locale:alternate" content="ar_SA" />
+
+    <!-- ============================================================
+         TWITTER / X CARD
+         ============================================================ -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@petsherosa" />
+    <meta name="twitter:creator" content="@petsherosa" />
+    <meta name="twitter:title" content="Pets Hero | Pet Care Services, Vets & Products in Saudi Arabia" />
+    <meta
+      name="twitter:description"
+      content="Saudi Arabia's #1 pet care platform. Expert vets, groomers, premium products & more — all in one app. 🐾"
+    />
+    <meta name="twitter:image" content="https://pets-hero-react.vercel.app/assets/og-image.png" />
+    <meta name="twitter:image:alt" content="Pets Hero — Your Partner for Complete Pet Care in Saudi Arabia" />
+
+    <!-- ============================================================
+         FAVICON & APP ICONS
+         ============================================================ -->
+    <link rel="icon" type="image/png" href="/assets/logo.png" />
+    <link rel="apple-touch-icon" href="/assets/logo.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- ============================================================
+         PERFORMANCE: Preload critical resources
+         ============================================================ -->
+    <link rel="preload" as="image" href="/assets/logo.png" fetchpriority="high" />
+    <link rel="preload" as="image" href="/assets/front.png" fetchpriority="low" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <title>Pets Hero — Your Partner For Pet Care</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- DNS prefetch for third-party services -->
+    <link rel="dns-prefetch" href="https://maps.google.com" />
+    <link rel="dns-prefetch" href="https://play.google.com" />
+    <link rel="dns-prefetch" href="https://apps.apple.com" />
+
+    <!-- ============================================================
+         JSON-LD: Organization Schema
+         (Additional schemas injected by SEO.jsx component)
+         ============================================================ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Pets Hero",
+      "alternateName": "بيتس هيرو",
+      "url": "https://pets-hero-react.vercel.app/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://pets-hero-react.vercel.app/assets/logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "description": "Saudi Arabia's leading pet care platform connecting pet owners with vets, groomers, product vendors, and service providers.",
+      "foundingDate": "2024",
+      "founder": {
+        "@type": "Person",
+        "name": "Yazeed Alhayyaf",
+        "jobTitle": "CEO & Founder",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Riyadh",
+          "addressCountry": "SA"
+        }
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "6746 Ahmad Fathi Zaghloul 2599, Al Taawun Dist.",
+        "addressLocality": "Riyadh",
+        "addressRegion": "Riyadh",
+        "addressCountry": "SA"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+966-53-922-2742",
+        "contactType": "customer service",
+        "availableLanguage": ["English", "Arabic"],
+        "areaServed": "SA"
+      },
+      "sameAs": [
+        "https://www.tiktok.com/@petshero",
+        "https://www.instagram.com/petsherosa",
+        "https://www.snapchat.com/@petsherosa"
+      ],
+      "areaServed": {
+        "@type": "Country",
+        "name": "Saudi Arabia"
+      }
+    }
+    </script>
   </head>
   <body>
+    <!-- Noscript fallback for crawlers & users without JS -->
+    <noscript>
+      <div style="font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; text-align: center;">
+        <h1>Pets Hero — Your Partner for Complete Pet Care in Saudi Arabia</h1>
+        <p>
+          Pets Hero is Saudi Arabia's leading pet care platform. Find expert vets, professional groomers,
+          premium pet products, and trusted service providers — all in one place. Serving Riyadh, KSA.
+        </p>
+        <h2>Our Services</h2>
+        <ul style="list-style: none; padding: 0;">
+          <li>🐕 <strong>Service Providers</strong> — Grooming, boarding, sitting, training, transportation</li>
+          <li>🐈 <strong>Product Vendors</strong> — Premium pet supplies with doorstep delivery</li>
+          <li>🐇 <strong>Veterinary Doctors</strong> — Online and onsite consultations</li>
+        </ul>
+        <h2>Download Our App</h2>
+        <p>
+          <a href="https://play.google.com/store/apps/details?id=com.petshero.customer">Google Play — Customer App</a> |
+          <a href="https://apps.apple.com/us/app/pets-hero/id6740918153">App Store — Customer App</a>
+        </p>
+        <p>
+          <a href="https://play.google.com/store/apps/details?id=com.petshero.vendor">Google Play — Vendor App</a> |
+          <a href="https://apps.apple.com/us/app/pets-hero-pro/id6740934646">App Store — Vendor App</a>
+        </p>
+        <h2>Contact Us</h2>
+        <p>📍 Al Taawun Dist., Riyadh, Saudi Arabia</p>
+        <p>📞 <a href="tel:+966539222742">+966-53-922-2742</a></p>
+        <p>Please enable JavaScript for the full experience.</p>
+      </div>
+    </noscript>
+
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

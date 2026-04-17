@@ -1,0 +1,34 @@
+{
+  "name": "Pets Hero",
+  "short_name": "Pets Hero",
+  "description": "Saudi Arabia's #1 pet care platform — vets, groomers, and premium products.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2BB1D6",
+  "orientation": "portrait-primary",
+  "lang": "en-SA",
+  "categories": ["lifestyle", "health", "shopping"],
+  "icons": [
+    {
+      "src": "/assets/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/customer-app-new.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "label": "Pets Hero Customer App"
+    }
+  ]
+}

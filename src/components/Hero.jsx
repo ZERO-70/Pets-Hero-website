@@ -156,9 +156,19 @@ export default function Hero() {
               />
             </motion.div>
 
-            <h1 className="mb-6 min-h-[3em] text-4xl font-extrabold leading-[1.15] text-dark sm:text-5xl xl:text-6xl">
-              {displayed}
-              <span className="ml-0.5 inline-block w-[3px] h-[1em] bg-[#2BB1D6] animate-pulse rounded-full align-middle" />
+            {/*
+             * SEO: The h1 has a static aria-label so crawlers and screen readers
+             * always get descriptive text — independent of the typewriter animation.
+             * The visible animation is aria-hidden to avoid duplicate reading.
+             */}
+            <h1
+              className="mb-6 min-h-[3em] text-4xl font-extrabold leading-[1.15] text-dark sm:text-5xl xl:text-6xl"
+              aria-label="Pets Hero — Simplify Pet Care, Amplify Love. Expert Vet Consultations, Premium Pet Products, and Trusted Service Providers in Saudi Arabia."
+            >
+              <span aria-hidden="true">
+                {displayed}
+                <span className="ml-0.5 inline-block w-[3px] h-[1em] bg-[#2BB1D6] animate-pulse rounded-full align-middle" />
+              </span>
             </h1>
 
             <motion.p

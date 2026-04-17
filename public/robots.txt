@@ -1,0 +1,17 @@
+# robots.txt for Pets Hero — https://pets-hero-react.vercel.app/
+# NOTE: Update domain in Sitemap line when custom domain goes live.
+
+User-agent: *
+Allow: /
+
+# Block build artifacts and dev paths
+Disallow: /src/
+Disallow: /_vite/
+Disallow: /.vite/
+Disallow: /node_modules/
+
+# Crawl delay (polite crawling)
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://pets-hero-react.vercel.app/sitemap.xml
