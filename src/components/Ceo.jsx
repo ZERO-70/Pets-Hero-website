@@ -120,9 +120,9 @@ export default function Ceo() {
                 <h4 className="theme-text-strong text-lg font-bold">{c.venturesHeading}</h4>
               </div>
               <div className="flex flex-wrap gap-2">
-                {c.ventures.map(({ name, emoji }) => (
+                {c.ventures.map(({ name, emoji }, idx) => (
                   <span
-                    key={name}
+                    key={`venture-${idx}`}
                     className={`inline-flex items-center gap-1 rounded-full border px-3.5 py-1.5 text-sm cursor-pointer transition-all duration-200 hover:scale-110 hover:-translate-y-0.5 ${
                       name === 'Pets Hero' || name === 'بيتس هيرو'
                         ? 'border-[#F25430]/30 bg-gradient-to-r from-[#F25430]/20 to-[#FF7A5C]/20 text-[#F25430] font-semibold shadow-sm shadow-[#F25430]/20 css-wiggle'
@@ -149,9 +149,9 @@ export default function Ceo() {
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-3">
-              {c.stats.map(({ value, label }) => (
+              {c.stats.map(({ value, label }, idx) => (
                 <motion.div
-                  key={label}
+                  key={`ceo-stat-${idx}`}
                   whileHover={{ scale: 1.04, y: -2 }}
                   className="rounded-xl border border-primary/20 bg-gradient-to-br from-primary/15 to-primary/5 p-4 text-center transition-all duration-300"
                 >

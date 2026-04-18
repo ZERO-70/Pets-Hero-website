@@ -60,7 +60,7 @@ export default function Services() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
+          viewport={{ once: true }}
           className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7"
         >
           {t.services.cards.map((card, idx) => {
@@ -71,7 +71,7 @@ export default function Services() {
 
             return (
               <motion.div
-                key={card.title}
+                key={`service-card-${idx}`}
                 variants={cardVariants}
                 whileHover={{ y: -8, scale: 1.02 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 15 }}

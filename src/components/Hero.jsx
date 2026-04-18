@@ -162,7 +162,7 @@ export default function Hero() {
               className={`mt-10 flex flex-wrap items-center justify-center gap-8 ${isRTL ? 'lg:justify-end' : 'lg:justify-start'}`}
             >
               {t.hero.stats.map(({ value, label }, i) => (
-                <div key={label} className="flex items-center gap-8">
+                <div key={`hero-stat-${i}`} className="flex items-center gap-8">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-gradient">{value}</div>
                     <div className="theme-text-subtle mt-0.5 text-xs">{label}</div>

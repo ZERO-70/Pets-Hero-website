@@ -75,9 +75,9 @@ export default function FindUs() {
             transition={{ duration: 0.6 }}
             className="space-y-4"
           >
-            {contactItems.map(({ icon: Icon, title, iconBg, iconColor, content }) => (
+            {contactItems.map(({ icon: Icon, title, iconBg, iconColor, content }, idx) => (
               <div
-                key={title}
+                key={`contact-${idx}`}
                 className="group flex items-start gap-4 rounded-2xl border border-[#1A2836]/8 bg-white p-5 shadow-sm transition-all duration-300 hover:shadow-md hover:border-[#2BB1D6]/30"
               >
                 <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${iconBg} transition-colors duration-300`}>

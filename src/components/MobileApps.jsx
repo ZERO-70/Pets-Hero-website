@@ -142,7 +142,7 @@ export default function MobileApps() {
                 const emoji = featureEmojis[i];
                 return (
                   <motion.div
-                    key={title}
+                    key={`mobile-feature-${i}`}
                     initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }}
