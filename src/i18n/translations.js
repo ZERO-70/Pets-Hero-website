@@ -25,7 +25,7 @@ export const translations = {
       ariaLabel:
         'Pets Hero — Simplify Pet Care, Amplify Love. Expert Vet Consultations, Premium Pet Products, and Trusted Service Providers in Saudi Arabia.',
       description:
-        'At Pets Hero, we are dedicated to providing exceptional services and products for your beloved pets. Our platform brings together three unique vendors — each specializing in different aspects of pet care — ensuring every need of your furry friend is met with the highest level of quality and care.',
+        'At Pets Hero, we are dedicated to providing exceptional services and products for your beloved pets. Our platform brings together three unique vendors, each specializing in different aspects of pet care, ensuring every need of your furry friend is met with the highest level of quality and care.',
       stats: [
         { value: '3+', label: 'Vendor Types' },
         { value: '24/7', label: 'Support' },
@@ -196,7 +196,7 @@ export const translations = {
       ariaLabel:
         'بيتس هيرو — بسّط رعاية حيوانك وضاعف الحب. استشارات بيطرية احترافية، منتجات مميزة، ومزودو خدمات موثوقون في المملكة العربية السعودية.',
       description:
-        'في بيتس هيرو، نسعى لتقديم خدمات ومنتجات استثنائية لحيواناتك الأليفة المحبوبة. تجمع منصتنا بين ثلاثة أنواع فريدة من البائعين — يختص كل منهم بجانب مختلف من رعاية الحيوانات — لضمان تلبية كل احتياجات صديقك الفروي بأعلى مستوى من الجودة والعناية.',
+        'في بيتس هيرو، نسعى لتقديم خدمات ومنتجات استثنائية لحيواناتك الأليفة المحبوبة. تجمع منصتنا بين ثلاثة أنواع فريدة من البائعين، يختص كل منهم بجانب مختلف من رعاية الحيوانات، لضمان تلبية كل احتياجات صديقك الفروي بأعلى مستوى من الجودة والعناية.',
       stats: [
         { value: '+3', label: 'أنواع الموردين' },
         { value: '24/7', label: 'دعم مستمر' },

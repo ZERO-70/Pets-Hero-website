@@ -7,40 +7,21 @@ import { translations } from '../i18n/translations';
 const LANG_KEY = 'pets-hero-lang';
 
 /**
- * Detect whether the user is likely in an Arabic-speaking region.
- * Priority: stored preference → browser timezone/locale → fallback EN
+ * Detect the initial language.
+ * Priority: stored preference → Saudi Arabia timezone → fallback EN
+ * Only KSA (Asia/Riyadh) shows Arabic by default; UAE and all other
+ * regions default to English.
  */
 function detectInitialLang() {
   // 1. Respect a previously stored manual choice
   const stored = localStorage.getItem(LANG_KEY);
   if (stored === 'ar' || stored === 'en') return stored;
 
-  // 2. Check browser timezone — Saudi Arabia and most Arab Gulf countries
+  // 2. Only auto-select Arabic for Saudi Arabia
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone ?? '';
-  const arabicTimezones = [
-    'Asia/Riyadh',       // KSA
-    'Asia/Kuwait',
-    'Asia/Qatar',        // Qatar
-    'Asia/Bahrain',
-    'Asia/Dubai',        // UAE
-    'Asia/Muscat',       // Oman
-    'Asia/Aden',         // Yemen
-    'Asia/Baghdad',      // Iraq
-    'Asia/Damascus',     // Syria
-    'Asia/Amman',        // Jordan
-    'Asia/Beirut',       // Lebanon
-    'Africa/Cairo',      // Egypt
-    'Africa/Tripoli',    // Libya
-    'Africa/Tunis',      // Tunisia
-    'Africa/Algiers',    // Algeria
-    'Africa/Casablanca', // Morocco
-  ];
-  if (arabicTimezones.includes(tz)) return 'ar';
+  if (tz === 'Asia/Riyadh') return 'ar';
 
-  // 3. Check browser language
-  const lang = (navigator.language || '').toLowerCase();
-  if (lang.startsWith('ar')) return 'ar';
-
+  // 3. Fallback to English for every other region (including UAE, etc.)
   return 'en';
 }
 
