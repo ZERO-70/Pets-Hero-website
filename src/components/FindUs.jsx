@@ -1,53 +1,57 @@
 import { motion } from 'framer-motion';
-import { MapPin, Phone, Clock, Heart } from 'lucide-react';
+import { MapPin, Phone, Clock } from 'lucide-react';
 import PawPrints from './PawPrints';
 import SectionDivider from './SectionDivider';
-
-const contactItems = [
-  {
-    icon: MapPin,
-    title: 'Address',
-    iconBg: 'bg-[#2BB1D6]/15',
-    iconColor: 'text-[#2BB1D6]',
-    content: (
-      <p className="theme-text-muted text-sm leading-relaxed">
-        6746 Ahmad Fathi Zaghloul 2599,<br />
-        Al Taawun Dist.<br />
-        Riyadh, KSA
-      </p>
-    ),
-  },
-  {
-    icon: Phone,
-    title: 'Phone',
-    iconBg: 'bg-accent/15',
-    iconColor: 'text-accent',
-    content: (
-      <a href="tel:+966539222742" className="text-sm font-semibold text-accent transition-colors hover:text-accent-light">
-        +966-53-922-2742
-      </a>
-    ),
-  },
-  {
-    icon: Clock,
-    title: 'Hours',
-    iconBg: 'bg-[#2BB1D6]/10',
-    iconColor: 'text-[#2BB1D6]',
-    content: (
-      <p className="theme-text-muted text-sm leading-relaxed">
-        Sun – Thu: 9:00 AM – 6:00 PM<br />
-        Fri – Sat: Closed
-      </p>
-    ),
-  },
-];
+import { useLang } from '../context/LanguageContext';
 
 export default function FindUs() {
+  const { t, isRTL } = useLang();
+  const f = t.findUs;
+
+  const contactItems = [
+    {
+      icon: MapPin,
+      title: f.address,
+      iconBg: 'bg-[#2BB1D6]/15',
+      iconColor: 'text-[#2BB1D6]',
+      content: (
+        <p className="theme-text-muted text-sm leading-relaxed">
+          {f.addressLines.map((line, i) => (
+            <span key={i}>{line}{i < f.addressLines.length - 1 && <br />}</span>
+          ))}
+        </p>
+      ),
+    },
+    {
+      icon: Phone,
+      title: f.phone,
+      iconBg: 'bg-accent/15',
+      iconColor: 'text-accent',
+      content: (
+        <a href="tel:+966539222742" className="text-sm font-semibold text-accent transition-colors hover:text-accent-light" dir="ltr">
+          +966-53-922-2742
+        </a>
+      ),
+    },
+    {
+      icon: Clock,
+      title: f.hours,
+      iconBg: 'bg-[#2BB1D6]/10',
+      iconColor: 'text-[#2BB1D6]',
+      content: (
+        <p className="theme-text-muted text-sm leading-relaxed">
+          {f.hoursLines.map((line, i) => (
+            <span key={i}>{line}{i < f.hoursLines.length - 1 && <br />}</span>
+          ))}
+        </p>
+      ),
+    },
+  ];
+
   return (
-    <section id="find-us" className="findus-theme-bg relative py-24">
-      {/* Floating paw prints */}
+    <section id="find-us" dir={isRTL ? 'rtl' : 'ltr'} className="findus-theme-bg relative py-24">
       <PawPrints count={3} />
-      
+
       <div className="relative z-10 mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -57,17 +61,15 @@ export default function FindUs() {
           className="mb-14 text-center"
         >
           <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#2BB1D6]/10 px-4 py-1.5 text-sm font-semibold tracking-wider text-[#2BB1D6] uppercase">
-            <MapPin size={14} /> Location <span>📍</span>
+            <MapPin size={14} /> {f.badge}
           </span>
-          <h2 className="theme-text-strong mb-5 text-4xl font-bold sm:text-5xl">Find Us 🗺️</h2>
-          <p className="theme-text-muted mx-auto max-w-xl text-lg">
-            Visit our office or get in touch — we're always here to help with your pet care needs.
-          </p>
+          <h2 className="theme-text-strong mb-5 text-4xl font-bold sm:text-5xl">{f.heading}</h2>
+          <p className="theme-text-muted mx-auto max-w-xl text-lg">{f.subheading}</p>
         </motion.div>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: isRTL ? 30 : -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.6 }}

@@ -45,6 +45,7 @@ export default memo(function SectionDivider({ variant = 'default', fill, classNa
 
   return (
     <div
+      dir="ltr"
       aria-hidden="true"
       className={`pointer-events-none absolute inset-x-0 bottom-0 z-20 ${preset.heightClass} ${preset.opacityClass || ''} translate-y-[1px] overflow-hidden ${className}`}
     >

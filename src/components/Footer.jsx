@@ -1,5 +1,6 @@
 import { Link } from 'react-scroll';
 import { Phone } from 'lucide-react';
+import { useLang } from '../context/LanguageContext';
 
 const TikTokIcon = () => (
   <svg viewBox="0 0 448 512" fill="currentColor" className="w-4 h-4">
@@ -19,13 +20,6 @@ const SnapchatIcon = () => (
   </svg>
 );
 
-const navLinks = [
-  { label: 'Mobile Apps', to: 'mobile-apps' },
-  { label: 'Services', to: 'services' },
-  { label: 'About Us', to: 'find-us' },
-  { label: 'CEO & Founder', to: 'ceo' },
-];
-
 const socialLinks = [
   { href: 'https://www.tiktok.com/@petshero', Icon: TikTokIcon, label: 'TikTok' },
   { href: 'https://www.instagram.com/petsherosa', Icon: InstagramIcon, label: 'Instagram' },
@@ -34,8 +28,18 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const { t, isRTL } = useLang();
+  const f = t.footer;
+
+  const navLinks = [
+    { label: t.nav.mobileApps, to: 'mobile-apps' },
+    { label: t.nav.services, to: 'services' },
+    { label: t.nav.aboutUs, to: 'find-us' },
+    { label: t.nav.ceoFounder, to: 'ceo' },
+  ];
+
   return (
-    <footer className="footer-theme-bg relative pt-14 pb-6">
+    <footer dir={isRTL ? 'rtl' : 'ltr'} className="footer-theme-bg relative pt-14 pb-6">
       {/* Decorative paw prints at bottom */}
       <div className="absolute bottom-0 left-0 right-0 overflow-hidden pointer-events-none opacity-10">
         <div className="flex justify-center gap-8 pb-4">
@@ -50,8 +54,8 @@ export default function Footer() {
           ))}
         </div>
       </div>
-      
-      {/* Pixelated moons - dark mode only */}
+
+      {/* Pixelated moons */}
       <div className="pointer-events-none absolute top-10 right-10 lg:top-16 lg:right-20">
         <div className="pixel-moon moon-float-medium relative" style={{ transform: 'scale(0.6)' }}>
           <div className="pixel-moon-glow absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2" style={{ transform: 'scale(0.6)' }} />
@@ -63,26 +67,23 @@ export default function Footer() {
           <div className="pixel-moon-glow absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2" style={{ transform: 'scale(0.4)' }} />
         </div>
       </div>
-      
+
       <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-[#2BB1D6]/10">
+          {/* Brand */}
           <div>
             <Link to="hero" smooth duration={500} className="cursor-pointer inline-block mb-4">
               <img src="/assets/logo.png" alt="Pets Hero" className="h-14 w-auto object-contain" />
             </Link>
-            <p className="theme-text-muted max-w-xs text-sm leading-relaxed">
-              Your partner for complete pet care 🐾 — connecting pet owners with services, products,
-              and expert veterinary care in Saudi Arabia.
-            </p>
+            <p className="theme-text-muted max-w-xs text-sm leading-relaxed">{f.tagline}</p>
           </div>
 
+          {/* Quick links */}
           <div>
-            <h3 className="theme-text-strong mb-4 flex items-center gap-2 font-semibold">
-              Quick Links <span>🦴</span>
-            </h3>
+            <h3 className="theme-text-strong mb-4 flex items-center gap-2 font-semibold">{f.quickLinks}</h3>
             <ul className="space-y-2.5">
               {navLinks.map(({ label, to }) => (
-                <li key={label}>
+                <li key={to}>
                   <Link
                     to={to}
                     smooth
@@ -97,10 +98,9 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Social + contact */}
           <div>
-            <h3 className="theme-text-strong mb-4 flex items-center gap-2 font-semibold">
-              Connect With Us <span>❤️</span>
-            </h3>
+            <h3 className="theme-text-strong mb-4 flex items-center gap-2 font-semibold">{f.connectWithUs}</h3>
             <div className="flex items-center gap-3 mb-6">
               {socialLinks.map(({ href, Icon, label, iconProps }) => (
                 <a
@@ -116,8 +116,8 @@ export default function Footer() {
               ))}
             </div>
             <div className="space-y-1">
-              <p className="theme-text-muted text-sm">📍 Al Taawun Dist. Riyadh, KSA</p>
-              <a href="tel:+966539222742" className="text-[#F25430] hover:underline text-sm">
+              <p className="theme-text-muted text-sm">{f.address}</p>
+              <a href="tel:+966539222742" className="text-[#F25430] hover:underline text-sm" dir="ltr">
                 📞 +966-53-922-2742
               </a>
             </div>
@@ -125,9 +125,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-6 text-center">
-          <p className="theme-text-muted flex items-center justify-center gap-2 text-sm">
-            <span>🐾</span> © 2026 Pets Hero. All Rights Reserved. <span>🐾</span>
-          </p>
+          <p className="theme-text-muted flex items-center justify-center gap-2 text-sm">{f.copyright}</p>
         </div>
       </div>
     </footer>

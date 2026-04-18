@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Bell, ShoppingBag, Scissors, UserCheck, Stethoscope, Users,
+  Bell, ShoppingBag, Scissors, Stethoscope, Users,
   Store, Wallet, Heart, Sparkles
 } from 'lucide-react';
 import PawPrints from './PawPrints';
 import SectionDivider from './SectionDivider';
+import { useLang } from '../context/LanguageContext';
 
 const AndroidIcon = () => (
   <svg viewBox="0 0 576 512" fill="currentColor" className="w-4 h-4">
@@ -19,61 +20,26 @@ const AppleIcon = () => (
   </svg>
 );
 
-const tabs = [
+// static store links (not translatable)
+const STORE_LINKS = [
   {
-    id: 'customer',
-    label: 'Customer App',
+    tabId: 'customer',
     playLink: 'https://play.google.com/store/apps/details?id=com.petshero.customer',
     appStoreLink: 'https://apps.apple.com/us/app/pets-hero/id6740918153',
     mockup: '/assets/customer-app-new.png',
-    features: [
-      {
-        icon: Bell,
-        emoji: '🔔',
-        title: 'Smart Notifications',
-        desc: 'Pet order notifications, upcoming vaccinations, reminders, birthday and food alerts.',
-      },
-      {
-        icon: ShoppingBag,
-        emoji: '🛍️',
-        title: 'Store',
-        desc: 'Shop premium pet supplies at unbeatable prices, with easy checkout and delivery.',
-      },
-      {
-        icon: Scissors,
-        emoji: '✂️',
-        title: 'Pet Services',
-        desc: 'Book professional grooming, boarding, sitting, and training services on demand.',
-      },
-    ],
   },
   {
-    id: 'vendor',
-    label: 'Vendor App',
+    tabId: 'vendor',
     playLink: 'https://play.google.com/store/apps/details?id=com.petshero.vendor',
     appStoreLink: 'https://apps.apple.com/us/app/pets-hero-pro/id6740934646',
     mockup: '/assets/vendor-app.png',
-    features: [
-      {
-        icon: Stethoscope,
-        emoji: '🩺',
-        title: 'Doctor Consultation',
-        desc: 'Provide expert medical consultations to your patients online and onsite via video.',
-      },
-      {
-        icon: Users,
-        emoji: '🤝',
-        title: 'Service Provider',
-        desc: 'Connect with pet owners for grooming, sitting, boarding, and more through the app.',
-      },
-      {
-        icon: Wallet,
-        emoji: '💳',
-        title: 'Wallet & Transactions',
-        desc: 'Manage all transactions securely — products, services, or consultations — in one place.',
-      },
-    ],
   },
+];
+
+// Icon mapping for features (order matches translations tabs/features)
+const TAB_FEATURE_ICONS = [
+  [Bell, ShoppingBag, Scissors],
+  [Stethoscope, Users, Wallet],
 ];
 
 const slideVariants = {
@@ -84,26 +50,37 @@ const slideVariants = {
   exitRight: { opacity: 0, x: -40 },
 };
 
+// Feature emoji mapping (static)
+const TAB_FEATURE_EMOJIS = [
+  ['🔔', '🛍️', '✂️'],
+  ['🩺', '🤝', '💳'],
+];
+
 export default function MobileApps() {
-  const [activeTab, setActiveTab] = useState('customer');
+  const { t, isRTL } = useLang();
+  const [activeTabId, setActiveTabId] = useState('customer');
   const [direction, setDirection] = useState(1);
 
+  const tabs = t.mobileApps.tabs;
+
   const handleTabChange = (id) => {
-    const currentIndex = tabs.findIndex((t) => t.id === activeTab);
-    const newIndex = tabs.findIndex((t) => t.id === id);
+    const currentIndex = tabs.findIndex((tab) => tab.id === activeTabId);
+    const newIndex = tabs.findIndex((tab) => tab.id === id);
     setDirection(newIndex > currentIndex ? 1 : -1);
-    setActiveTab(id);
+    setActiveTabId(id);
   };
 
-  const currentTab = tabs.find((t) => t.id === activeTab);
+  const activeTabIndex = tabs.findIndex((tab) => tab.id === activeTabId);
+  const currentTab = tabs[activeTabIndex];
+  const currentStore = STORE_LINKS[activeTabIndex];
+  const featureIcons = TAB_FEATURE_ICONS[activeTabIndex];
+  const featureEmojis = TAB_FEATURE_EMOJIS[activeTabIndex];
 
   return (
-    <section id="mobile-apps" className="mobileapps-theme-bg relative overflow-hidden py-24">
-      {/* Floating paw prints */}
+    <section id="mobile-apps" dir={isRTL ? 'rtl' : 'ltr'} className="mobileapps-theme-bg relative overflow-hidden py-24">
       <PawPrints count={3} />
-
       <div className="mobileapps-overlay pointer-events-none absolute inset-0" />
-      
+
       <div className="relative z-10 mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -113,16 +90,13 @@ export default function MobileApps() {
           className="text-center mb-12"
         >
           <span className="inline-flex items-center gap-2 bg-[#F25430]/20 text-[#F25430] font-semibold text-sm px-4 py-1.5 rounded-full mb-4 tracking-wider uppercase css-pulse-scale">
-            <Sparkles size={14} /> Download Now <Sparkles size={14} />
+            <Sparkles size={14} /> {t.mobileApps.badge} <Sparkles size={14} />
           </span>
-          <h2 className="theme-text-strong mb-5 text-4xl font-bold sm:text-5xl">
-            📱 Our Mobile Apps 🐾
-          </h2>
-          <p className="theme-text-muted mx-auto max-w-xl text-lg">
-            Available for both pet owners and vendors — get started in minutes.
-          </p>
+          <h2 className="theme-text-strong mb-5 text-4xl font-bold sm:text-5xl">{t.mobileApps.heading}</h2>
+          <p className="theme-text-muted mx-auto max-w-xl text-lg">{t.mobileApps.subheading}</p>
         </motion.div>
 
+        {/* Tabs */}
         <div className="mb-10 flex justify-center">
           <div className="mobileapps-tab-shell inline-flex rounded-full p-1 gap-1 shadow-sm">
             {tabs.map((tab) => (
@@ -130,12 +104,10 @@ export default function MobileApps() {
                 key={tab.id}
                 onClick={() => handleTabChange(tab.id)}
                 className={`relative px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
-                  activeTab === tab.id
-                    ? 'text-white'
-                    : 'mobileapps-tab-inactive'
+                  activeTabId === tab.id ? 'text-white' : 'mobileapps-tab-inactive'
                 }`}
               >
-                {activeTab === tab.id && (
+                {activeTabId === tab.id && (
                   <motion.div
                     layoutId="tab-pill"
                     className="absolute inset-0 bg-[#2BB1D6] rounded-full"
@@ -150,7 +122,7 @@ export default function MobileApps() {
 
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
-            key={activeTab}
+            key={activeTabId + t.mobileApps.badge}
             custom={direction}
             variants={{
               enter: (d) => (d > 0 ? slideVariants.enterRight : slideVariants.enterLeft),
@@ -163,39 +135,45 @@ export default function MobileApps() {
             transition={{ duration: 0.35, ease: 'easeInOut' }}
             className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center"
           >
+            {/* Features list */}
             <div className="space-y-6">
-              {currentTab.features.map(({ icon: Icon, emoji, title, desc }, i) => (
-                <motion.div
-                  key={title}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  whileHover={{ x: 8, scale: 1.02 }}
-                  className="flex gap-4 group cursor-pointer"
-                >
-                  <motion.div 
-                    className="w-12 h-12 rounded-2xl bg-[#2BB1D6]/15 flex items-center justify-center shrink-0 group-hover:bg-[#2BB1D6]/25 transition-colors duration-300"
-                    whileHover={{ rotate: 10, scale: 1.1 }}
-                    transition={{ type: 'spring', stiffness: 400 }}
+              {currentTab.features.map(({ title, desc }, i) => {
+                const Icon = featureIcons[i];
+                const emoji = featureEmojis[i];
+                return (
+                  <motion.div
+                    key={title}
+                    initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    whileHover={{ x: isRTL ? -8 : 8, scale: 1.02 }}
+                    className="flex gap-4 group cursor-pointer"
                   >
-                    <span className="text-lg mr-0.5">{emoji}</span>
-                    <Icon size={20} className="text-[#2BB1D6] group-hover:text-[#F25430] transition-colors duration-300" />
+                    <motion.div
+                      className="w-12 h-12 rounded-2xl bg-[#2BB1D6]/15 flex items-center justify-center shrink-0 group-hover:bg-[#2BB1D6]/25 transition-colors duration-300"
+                      whileHover={{ rotate: 10, scale: 1.1 }}
+                      transition={{ type: 'spring', stiffness: 400 }}
+                    >
+                      <span className="text-lg mr-0.5">{emoji}</span>
+                      <Icon size={20} className="text-[#2BB1D6] group-hover:text-[#F25430] transition-colors duration-300" />
+                    </motion.div>
+                    <div>
+                      <h4 className="theme-text-strong mb-1 font-semibold">{title}</h4>
+                      <p className="theme-text-muted text-sm leading-relaxed">{desc}</p>
+                    </div>
                   </motion.div>
-                  <div>
-                    <h4 className="theme-text-strong mb-1 font-semibold">{title}</h4>
-                    <p className="theme-text-muted text-sm leading-relaxed">{desc}</p>
-                  </div>
-                </motion.div>
-              ))}
+                );
+              })}
             </div>
 
+            {/* App mockup */}
             <div className="flex justify-center css-float-slow">
               <div className="relative">
                 <div className="absolute -inset-8 rounded-full bg-primary/20 blur-3xl" />
                 <div className="polaroid-app relative">
                   <img
-                    src={currentTab.mockup}
-                    alt={`${currentTab.label} screenshot — Pets Hero pet care app for Saudi Arabia`}
+                    src={currentStore.mockup}
+                    alt={`${currentTab.label} — Pets Hero`}
                     loading="lazy"
                     className="h-[320px] w-auto object-contain rounded-xl sm:h-[380px]"
                   />
@@ -206,16 +184,15 @@ export default function MobileApps() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-4 items-center lg:items-start">
+            {/* Description + download buttons */}
+            <div className={`flex flex-col gap-4 items-center ${isRTL ? 'lg:items-end' : 'lg:items-start'}`}>
               <h3 className="theme-text-strong text-2xl font-bold">{currentTab.label}</h3>
-              <p className="theme-text-muted text-center text-sm leading-relaxed lg:text-left">
-                {activeTab === 'customer'
-                  ? 'Download the Pets Hero customer app and access everything your pet needs — from shopping to vet consultations.'
-                  : 'Join Pets Hero as a vendor, doctor, or service provider and grow your business by connecting with thousands of pet owners.'}
+              <p className={`theme-text-muted text-center text-sm leading-relaxed ${isRTL ? 'lg:text-right' : 'lg:text-left'}`}>
+                {currentTab.description}
               </p>
               <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                 <motion.a
-                  href={currentTab.playLink}
+                  href={currentStore.playLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Download ${currentTab.label} on Google Play`}
@@ -225,10 +202,10 @@ export default function MobileApps() {
                   transition={{ type: 'spring', stiffness: 400 }}
                 >
                   <AndroidIcon />
-                  Google Play
+                  {t.mobileApps.googlePlay}
                 </motion.a>
                 <motion.a
-                  href={currentTab.appStoreLink}
+                  href={currentStore.appStoreLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Download ${currentTab.label} on the App Store`}
@@ -238,7 +215,7 @@ export default function MobileApps() {
                   transition={{ type: 'spring', stiffness: 400 }}
                 >
                   <AppleIcon />
-                  App Store
+                  {t.mobileApps.appStore}
                 </motion.a>
               </div>
               <div className="flex items-center gap-2 mt-2">
@@ -255,7 +232,7 @@ export default function MobileApps() {
                 </div>
                 <span className="theme-text-muted flex items-center gap-1 text-xs css-pulse-opacity">
                   <Heart size={10} className="text-[#F25430]" fill="currentColor" />
-                  Thousands of happy pets
+                  {t.mobileApps.happyPets}
                 </span>
               </div>
             </div>

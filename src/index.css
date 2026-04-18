@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Cairo:wght@400;500;600;700;800&display=swap');
+
 @import "tailwindcss";
 
 :root {
@@ -120,12 +121,30 @@ html.theme-dark {
     transition: background-color 0.35s ease, color 0.35s ease;
   }
 
+  /* Arabic RTL — use Cairo for better Arabic rendering */
+  html[lang='ar'] body,
+  html[lang='ar'] h1,
+  html[lang='ar'] h2,
+  html[lang='ar'] h3,
+  html[lang='ar'] h4,
+  html[lang='ar'] h5,
+  html[lang='ar'] h6,
+  html[lang='ar'] p,
+  html[lang='ar'] span,
+  html[lang='ar'] a,
+  html[lang='ar'] button,
+  html[lang='ar'] li {
+    font-family: 'Cairo', 'Segoe UI', sans-serif;
+    letter-spacing: 0;
+  }
+
   /* Cute headings with extra weight */
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Nunito', sans-serif;
     font-weight: 700;
     letter-spacing: -0.02em;
   }
+
 
   #root {
     min-height: 100vh;
@@ -501,15 +520,25 @@ html.theme-dark {
     }
   }
 
+  /* Hero wave wrapper — clips on all sides regardless of page direction */
+  .hero-wave-container {
+    overflow: clip !important;  /* geometric clip, direction-agnostic */
+    direction: ltr !important;
+    unicode-bidi: isolate !important;
+  }
+
   /* Hero layered wave background */
   .hero-wave {
     position: absolute;
     left: -22%;
+    right: -22%;
     width: 144%;
     height: 100%;
     bottom: -10%;
     will-change: transform;
+    margin: 0 auto;
   }
+
 
   .hero-wave-back {
     animation: hero-wave-drift-back 12s linear infinite;

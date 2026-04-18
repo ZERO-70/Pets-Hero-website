@@ -2,13 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-scroll';
 import { Menu, Moon, Sun, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const navLinks = [
-  { label: 'Mobile Apps', to: 'mobile-apps' },
-  { label: 'Services', to: 'services' },
-  { label: 'About Us', to: 'find-us' },
-  { label: 'CEO & Founder', to: 'ceo' },
-];
+import { useLang } from '../context/LanguageContext';
 
 const TikTokIcon = () => (
   <svg viewBox="0 0 448 512" fill="currentColor" className="w-4 h-4">
@@ -34,7 +28,17 @@ const socialLinks = [
   { href: 'https://www.snapchat.com/@petsherosa', Icon: SnapchatIcon, label: 'Snapchat' },
 ];
 
+// Language toggle icon — globe-like SVG
+const GlobeIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+    <circle cx="12" cy="12" r="10" />
+    <line x1="2" y1="12" x2="22" y2="12" />
+    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+  </svg>
+);
+
 export default function Navbar({ theme, onToggleTheme }) {
+  const { t, lang, toggleLang, isRTL } = useLang();
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -42,6 +46,14 @@ export default function Navbar({ theme, onToggleTheme }) {
   const lastScrollY = useRef(0);
   const gradientStartTime = useRef(Date.now());
   const isDark = theme === 'dark';
+
+  // Build nav links from translations
+  const navLinks = [
+    { label: t.nav.mobileApps, to: 'mobile-apps' },
+    { label: t.nav.services, to: 'services' },
+    { label: t.nav.aboutUs, to: 'find-us' },
+    { label: t.nav.ceoFounder, to: 'ceo' },
+  ];
 
   const navShellClass = isDark
     ? 'bg-gradient-to-r from-[#1A2836]/95 via-[#243442]/95 via-[#2BB1D6]/75 via-[#243442]/95 to-[#1A2836]/95 border-b border-[#F5F1E6]/10'
@@ -57,27 +69,18 @@ export default function Navbar({ theme, onToggleTheme }) {
 
     const handleScroll = () => {
       if (rafId) return;
-
       rafId = requestAnimationFrame(() => {
         const currentScrollY = window.scrollY;
         const scrollDelta = currentScrollY - lastScrollY.current;
-
-        // Always show at top
         if (currentScrollY < 50) {
           setVisible(true);
           setScrolled(false);
         } else {
           setScrolled(true);
-
-          if (scrollDelta > directionThreshold) {
-            setVisible(false);
-          } else if (scrollDelta < -directionThreshold) {
-            setVisible(true);
-          }
+          if (scrollDelta > directionThreshold) setVisible(false);
+          else if (scrollDelta < -directionThreshold) setVisible(true);
         }
-
         lastScrollY.current = currentScrollY;
-
         rafId = null;
       });
     };
@@ -89,36 +92,22 @@ export default function Navbar({ theme, onToggleTheme }) {
     };
   }, []);
 
-  // Track active section using Intersection Observer
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: '-50% 0px -50% 0px',
-      threshold: 0,
-    };
-
+    const observerOptions = { root: null, rootMargin: '-50% 0px -50% 0px', threshold: 0 };
     const observerCallback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
+      entries.forEach((entry) => { if (entry.isIntersecting) setActiveSection(entry.target.id); });
     };
-
     const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-    // Observe all sections
-    const sections = ['hero', 'mobile-apps', 'services', 'find-us', 'ceo'];
-    sections.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
+    ['hero', 'mobile-apps', 'services', 'find-us', 'ceo'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
     });
-
     return () => observer.disconnect();
   }, []);
 
   return (
     <nav
+      dir={isRTL ? 'rtl' : 'ltr'}
       className={`fixed left-0 right-0 z-50 transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${
         visible ? 'translate-y-0' : '-translate-y-full'
       } backdrop-blur-xl animate-gradient-flow ${navShellClass}`}
@@ -137,10 +126,11 @@ export default function Navbar({ theme, onToggleTheme }) {
           </div>
         </Link>
 
+        {/* Desktop nav links */}
         <div className="hidden md:flex items-center gap-1 lg:gap-2 relative">
           {navLinks.map((link) => (
             <motion.div
-              key={link.label}
+              key={link.to}
               whileHover={{ y: -4, scale: 1.05 }}
               transition={{ type: 'spring', stiffness: 400, damping: 15 }}
             >
@@ -164,14 +154,16 @@ export default function Navbar({ theme, onToggleTheme }) {
           ))}
         </div>
 
+        {/* Desktop action buttons */}
         <div className="hidden md:flex items-center gap-2.5 lg:gap-3">
-          {/* Small pixelated moon - dark mode only */}
+          {/* Small pixelated moon */}
           <div className="relative mr-1">
             <div className="pixel-moon moon-float-fast" style={{ transform: 'scale(0.4)' }}>
               <div className="pixel-moon-glow absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2" style={{ transform: 'scale(0.4)' }} />
             </div>
           </div>
-          
+
+          {/* Theme toggle */}
           <button
             type="button"
             onClick={onToggleTheme}
@@ -181,6 +173,21 @@ export default function Navbar({ theme, onToggleTheme }) {
           >
             {isDark ? <Sun size={16} /> : <Moon size={16} />}
           </button>
+
+          {/* Language toggle */}
+          <motion.button
+            type="button"
+            onClick={toggleLang}
+            whileHover={{ scale: 1.1, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+            className="flex items-center gap-1.5 h-9 px-3 rounded-full bg-white/20 text-white text-xs font-bold tracking-wide transition-all duration-200 hover:bg-[#F25430]"
+            aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
+            title={lang === 'en' ? 'Switch to Arabic / عربي' : 'Switch to English'}
+          >
+            <GlobeIcon />
+            <span>{lang === 'en' ? 'عربي' : 'EN'}</span>
+          </motion.button>
 
           {socialLinks.map(({ href, Icon, label }) => (
             <motion.a
@@ -198,7 +205,19 @@ export default function Navbar({ theme, onToggleTheme }) {
           ))}
         </div>
 
+        {/* Mobile actions */}
         <div className="md:hidden flex items-center gap-2">
+          {/* Language toggle (mobile) */}
+          <button
+            type="button"
+            onClick={toggleLang}
+            className="flex items-center gap-1 text-white px-2.5 py-1.5 rounded-full bg-white/20 text-xs font-bold transition-colors hover:bg-[#F25430]"
+            aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
+          >
+            <GlobeIcon />
+            <span>{lang === 'en' ? 'عربي' : 'EN'}</span>
+          </button>
+
           <button
             type="button"
             className="text-white p-1.5 rounded-full bg-white/20 transition-colors hover:bg-[#F25430]"
@@ -243,11 +262,11 @@ export default function Navbar({ theme, onToggleTheme }) {
             className={`md:hidden overflow-hidden backdrop-blur-xl animate-gradient-flow ${mobileShellClass}`}
             style={{ animationDelay: `${-((Date.now() - gradientStartTime.current) % 30000)}ms` }}
           >
-            <div className="px-4 pb-4 pt-2 flex flex-col gap-3">
+            <div className={`px-4 pb-4 pt-2 flex flex-col gap-3 ${isRTL ? 'items-end' : 'items-start'}`}>
               {navLinks.map((link, i) => (
                 <motion.div
-                  key={link.label}
-                  initial={{ opacity: 0, x: -20 }}
+                  key={link.to}
+                  initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1, type: 'spring', stiffness: 300 }}
                 >
